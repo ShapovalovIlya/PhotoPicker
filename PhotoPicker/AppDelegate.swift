@@ -13,7 +13,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let barAppearance = UINavigationBar.appearance()
+            barAppearance.isTranslucent = false
+            barAppearance.clipsToBounds = false
+            
+            let titleTextAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.systemBlue,
+            ]
+            
+            if #available(iOS 15, *) {
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithTransparentBackground()
+                appearance.backgroundColor = UIColor.white
+                appearance.titleTextAttributes = titleTextAttributes
+
+                barAppearance.standardAppearance = appearance
+                barAppearance.scrollEdgeAppearance = appearance
+            } else {
+                barAppearance.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.defaultPrompt)
+                barAppearance.shadowImage = UIImage()
+                barAppearance.barTintColor = UIColor.white
+                barAppearance.titleTextAttributes = titleTextAttributes
+            }
+            barAppearance.tintColor = .systemBlue
+        
         return true
     }
 

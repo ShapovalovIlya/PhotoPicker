@@ -18,30 +18,16 @@ final class LibraryMainViewController: UIViewController {
         return searchBar
     }()
     
-//    private let collectionView: UICollectionView = {
-//        let collection = UICollectionView()
-//        return collection
-//    }()
+    private var collectionView: UICollectionView!
 
     //MARK: - Life Cycle
     override func loadView() {
         super.loadView()
         
+        setupCollectionView()
         setupView()
         setDelegates()
         setupNavigationBar()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.navigationBar.isHidden = false
     }
     
 //MARK: - Private methods
@@ -65,6 +51,8 @@ final class LibraryMainViewController: UIViewController {
         searchBar.showsCancelButton = shouldShow
         navigationItem.titleView = shouldShow ? searchBar : nil
     }
+    
+    
 }
 
 //MARK: - Search Bar Delegate
@@ -78,18 +66,53 @@ extension LibraryMainViewController: UISearchBarDelegate {
     }
 }
 
+//MARK: - Collection View Data Source
+extension LibraryMainViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
+        cell.backgroundColor = .systemGreen
+        let image = UIImage(systemName: "keyboard")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        cell.backgroundView = imageView
+        cell.layer.cornerRadius = 10
+        return cell
+    }
+    
+    
+}
+
+//MARK: - Collection View Delegate
+extension LibraryMainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Select item at index: \(indexPath.item)")
+    }
+}
+
 //MARK: - Library Main View Delegate
 extension LibraryMainViewController: LibraryMainViewDelegate {
     
 }
 
 private extension LibraryMainViewController {
+    
     //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .lightGray
-        view.addSubviews([
-            
-        ])
+        view.addSubview(collectionView)
+    }
+    
+    //MARK: - Setup collection view
+    func setupCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionLayout())
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.backgroundColor = .clear
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionViewCell")
     }
     
     //MARK: - Setup navigation bar
@@ -103,13 +126,42 @@ private extension LibraryMainViewController {
     //MARK: - Set delegates
     func setDelegates() {
         searchBar.delegate = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
-    //MARK: - Set constraints
-    func setConstraints() {
-        NSLayoutConstraint.activate([
-            
-        ])
+    //MARK: - Set collection view layout
+    func collectionLayout() -> UICollectionViewLayout {
+        let spacing = CGFloat(5)
+        
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(0.25))
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitem: item,
+            count: 2
+        )
+        group.interItemSpacing = .fixed(spacing)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = spacing
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: spacing,
+            bottom: 0,
+            trailing: spacing
+        )
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        
+        return layout
     }
 }
 
