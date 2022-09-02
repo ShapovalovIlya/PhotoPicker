@@ -23,4 +23,15 @@ final class Router: RouterProtocol {
         self.navigationController = navigationController
         self.moduleBuilder = moduleBuilder
     }
+    
+    func initialLibraryVC() {
+        guard
+            let navigationController = navigationController,
+            let mainViewController = moduleBuilder?.makeLibraryMainVC(router: self)
+        else {
+            return
+        }
+        navigationController.viewControllers = [mainViewController]
+        navigationController.tabBarItem = TabBarItems.library.item
+    }
 }

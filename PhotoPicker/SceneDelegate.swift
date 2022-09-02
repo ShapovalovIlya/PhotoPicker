@@ -15,8 +15,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ViewController()
+        
+        let moduleBuilder = ModuleBuilder()
+        let libraryNavigationController = UINavigationController()
+//        let favoriteNavigationController = UINavigationController()
+        
+        let libraryRouter = Router(navigationController: libraryNavigationController, moduleBuilder: moduleBuilder)
+        libraryRouter.initialLibraryVC()
+        
+        let tabs = [libraryNavigationController]
+        let tabBar = TabBarController(viewControllers: tabs)
+        
+        window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
+        window?.overrideUserInterfaceStyle = .light
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

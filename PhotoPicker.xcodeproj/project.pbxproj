@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		8672C38A28C29B830050B23B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C38928C29B830050B23B /* AppDelegate.swift */; };
 		8672C38C28C29B830050B23B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C38B28C29B830050B23B /* SceneDelegate.swift */; };
-		8672C38E28C29B830050B23B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C38D28C29B830050B23B /* ViewController.swift */; };
+		8672C38E28C29B830050B23B /* LibraryMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C38D28C29B830050B23B /* LibraryMainViewController.swift */; };
 		8672C39328C29B860050B23B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8672C39228C29B860050B23B /* Assets.xcassets */; };
 		8672C39628C29B860050B23B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8672C39428C29B860050B23B /* LaunchScreen.storyboard */; };
 		8672C39E28C29D7F0050B23B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C39D28C29D7F0050B23B /* TabBarController.swift */; };
@@ -22,7 +22,7 @@
 		8672C38628C29B830050B23B /* PhotoPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8672C38928C29B830050B23B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8672C38B28C29B830050B23B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8672C38D28C29B830050B23B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8672C38D28C29B830050B23B /* LibraryMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMainViewController.swift; sourceTree = "<group>"; };
 		8672C39228C29B860050B23B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8672C39528C29B860050B23B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8672C39728C29B860050B23B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,12 +68,20 @@
 				8672C39D28C29D7F0050B23B /* TabBarController.swift */,
 				8672C39F28C29DAC0050B23B /* ModuleBuilder.swift */,
 				8672C3A128C29E1C0050B23B /* Router.swift */,
-				8672C38D28C29B830050B23B /* ViewController.swift */,
+				8672C3A528C2A4C20050B23B /* LibraryModule */,
 				8672C39228C29B860050B23B /* Assets.xcassets */,
 				8672C39428C29B860050B23B /* LaunchScreen.storyboard */,
 				8672C39728C29B860050B23B /* Info.plist */,
 			);
 			path = PhotoPicker;
+			sourceTree = "<group>";
+		};
+		8672C3A528C2A4C20050B23B /* LibraryModule */ = {
+			isa = PBXGroup;
+			children = (
+				8672C38D28C29B830050B23B /* LibraryMainViewController.swift */,
+			);
+			path = LibraryModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,7 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8672C38E28C29B830050B23B /* ViewController.swift in Sources */,
+				8672C38E28C29B830050B23B /* LibraryMainViewController.swift in Sources */,
 				8672C3A028C29DAC0050B23B /* ModuleBuilder.swift in Sources */,
 				8672C39E28C29D7F0050B23B /* TabBarController.swift in Sources */,
 				8672C38A28C29B830050B23B /* AppDelegate.swift in Sources */,
