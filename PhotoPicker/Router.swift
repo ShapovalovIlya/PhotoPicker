@@ -12,7 +12,11 @@ protocol RouterMain {
     var moduleBuilder: ModuleBuilderInterface? { get set }
 }
 
-typealias RouterProtocol = RouterMain
+protocol LibraryRouter {
+    
+}
+
+typealias RouterProtocol = RouterMain & LibraryRouter
 
 final class Router: RouterProtocol {
     
@@ -34,4 +38,6 @@ final class Router: RouterProtocol {
         navigationController.viewControllers = [mainViewController]
         navigationController.tabBarItem = TabBarItems.library.item
     }
+    
+    
 }

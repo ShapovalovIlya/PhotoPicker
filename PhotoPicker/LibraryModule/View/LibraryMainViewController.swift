@@ -7,15 +7,57 @@
 
 import UIKit
 
-class LibraryMainViewController: UIViewController {
+final class LibraryMainViewController: UIViewController {
+    
+    var presenter: LibraryPresenterProtocol!
+    //MARK: - Private properties
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.sizeToFit()
+         
+        return searchBar
+    }()
 
+    //MARK: - Life Cycle
+    override func loadView() {
+        super.loadView()
+        
+        setupView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .lightGray
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.isHidden = false
+    }
+}
 
+extension LibraryMainViewController: LibraryMainView {
+    
+}
+
+private extension LibraryMainViewController {
+    func setupView() {
+        view.backgroundColor = .lightGray
+    }
+    
+    func setConstraints() {
+        NSLayoutConstraint.activate([
+        
+        ])
+    }
 }
 
 //MARK: - SwiftUI preview provider
