@@ -15,6 +15,7 @@
 		8672C39E28C29D7F0050B23B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C39D28C29D7F0050B23B /* TabBarController.swift */; };
 		8672C3A028C29DAC0050B23B /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C39F28C29DAC0050B23B /* ModuleBuilder.swift */; };
 		8672C3A228C29E1C0050B23B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3A128C29E1C0050B23B /* Router.swift */; };
+		8672C3A428C2A0620050B23B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8672C3A328C2A0620050B23B /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		8672C39D28C29D7F0050B23B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8672C39F28C29DAC0050B23B /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		8672C3A128C29E1C0050B23B /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		8672C3A328C2A0620050B23B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 		8672C37D28C29B830050B23B = {
 			isa = PBXGroup;
 			children = (
+				8672C3A328C2A0620050B23B /* README.md */,
 				8672C38828C29B830050B23B /* PhotoPicker */,
 				8672C38728C29B830050B23B /* Products */,
 			);
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8672C3A428C2A0620050B23B /* README.md in Resources */,
 				8672C39628C29B860050B23B /* LaunchScreen.storyboard in Resources */,
 				8672C39328C29B860050B23B /* Assets.xcassets in Resources */,
 			);
