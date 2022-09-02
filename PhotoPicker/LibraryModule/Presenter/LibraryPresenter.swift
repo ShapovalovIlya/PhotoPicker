@@ -6,20 +6,20 @@
 //
 
 import Foundation
-protocol LibraryMainView: AnyObject {
+protocol LibraryMainViewDelegate: AnyObject {
     
 }
 
 protocol LibraryPresenterProtocol {
-    init(view: LibraryMainView, router: LibraryRouter)
+    init(view: LibraryMainViewDelegate, router: LibraryRouter)
 }
 
 final class LibraryPresenter: LibraryPresenterProtocol {
     
     var router: LibraryRouter?
-    weak var view: LibraryMainView?
+    weak var view: LibraryMainViewDelegate?
     
-    init(view: LibraryMainView, router: LibraryRouter) {
+    init(view: LibraryMainViewDelegate, router: LibraryRouter) {
         self.view = view
         self.router = router
     }

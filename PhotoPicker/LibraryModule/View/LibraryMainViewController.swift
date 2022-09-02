@@ -14,15 +14,22 @@ final class LibraryMainViewController: UIViewController {
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.sizeToFit()
-         
+        searchBar.placeholder = "Search..."
         return searchBar
     }()
+    
+//    private let collectionView: UICollectionView = {
+//        let collection = UICollectionView()
+//        return collection
+//    }()
 
     //MARK: - Life Cycle
     override func loadView() {
         super.loadView()
         
         setupView()
+        setDelegates()
+        setupNavigationBar()
     }
     
     override func viewDidLoad() {
@@ -34,28 +41,74 @@ final class LibraryMainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.navigationBar.isHidden = false
+//MARK: - Private methods
+    @objc private func handleShowSearchBar() {
+        shouldShowSearchBar(true)
+        searchBar.becomeFirstResponder()
+    }
+    
+    private func shouldShowSearchButton(_ shouldShow: Bool) {
+        if shouldShow {
+            let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowSearchBar))
+            
+            navigationItem.rightBarButtonItem = searchButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    private func shouldShowSearchBar(_ shouldShow: Bool) {
+        shouldShowSearchButton(!shouldShow)
+        searchBar.showsCancelButton = shouldShow
+        navigationItem.titleView = shouldShow ? searchBar : nil
     }
 }
 
-extension LibraryMainViewController: LibraryMainView {
+//MARK: - Search Bar Delegate
+extension LibraryMainViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        shouldShowSearchBar(false)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("Search text is: \(searchText)")
+    }
+}
+
+//MARK: - Library Main View Delegate
+extension LibraryMainViewController: LibraryMainViewDelegate {
     
 }
 
 private extension LibraryMainViewController {
+    //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .lightGray
+        view.addSubviews([
+            
+        ])
     }
     
+    //MARK: - Setup navigation bar
+    func setupNavigationBar() {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .systemBlue
+        shouldShowSearchButton(true)
+    }
+    
+    //MARK: - Set delegates
+    func setDelegates() {
+        searchBar.delegate = self
+    }
+    
+    //MARK: - Set constraints
     func setConstraints() {
         NSLayoutConstraint.activate([
-        
+            
         ])
     }
 }

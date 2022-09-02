@@ -12,7 +12,7 @@ protocol ModuleBuilderInterface {
 }
 
 final class ModuleBuilder: ModuleBuilderInterface {
-    func makeLibraryMainVC(router: LibraryRouter) -> UIViewController{
+    func makeLibraryMainVC(router: LibraryRouter) -> UIViewController {
         let view = LibraryMainViewController()
         let presenter = LibraryPresenter(view: view, router: router)
         view.presenter = presenter
