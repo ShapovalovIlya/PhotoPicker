@@ -8,9 +8,14 @@
 import UIKit
 
 protocol ModuleBuilderInterface {
-    
+    func makeLibraryMainVC(router: RouterProtocol) -> UIViewController
 }
 
 final class ModuleBuilder: ModuleBuilderInterface {
+    func makeLibraryMainVC(router: RouterProtocol) -> UIViewController{
+        let view = LibraryMainViewController()
+        return view
+    }
+    
     
 }

@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LibraryMainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .white
+        view.backgroundColor = .lightGray
     }
 
 
@@ -27,11 +27,10 @@ struct ViewControllerProvider: PreviewProvider {
     }
     
     struct ContainerView: UIViewControllerRepresentable{
-    
-        let viewController = ViewController()
+        let viewController = LibraryMainViewController()
         func makeUIViewController(
             context: UIViewControllerRepresentableContext<ViewControllerProvider.ContainerView>
-        ) -> ViewController {
+        ) -> LibraryMainViewController {
             
             return viewController
         }
