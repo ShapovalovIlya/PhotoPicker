@@ -104,7 +104,7 @@ private extension LibraryMainViewController {
     
     //MARK: - Setup view
     func setupView() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         view.addSubview(collectionView)
     }
     

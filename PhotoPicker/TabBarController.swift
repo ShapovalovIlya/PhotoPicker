@@ -47,9 +47,16 @@ final class TabBarController: UITabBarController {
         
         setupTabBar()
     }
-    
+
     private func setupTabBar() {
-        tabBar.backgroundColor = .white
+        tabBar.backgroundImage = UIImage()
+        
+        let lightBlurEffect = UIBlurEffect(style: .light)
+        let frost = UIVisualEffectView(effect: lightBlurEffect)
+        frost.frame = self.tabBar.bounds
+        frost.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.tabBar.addSubview(frost)
+        
         tabBar.unselectedItemTintColor = .lightGray
         tabBar.tintColor = .systemBlue
     }

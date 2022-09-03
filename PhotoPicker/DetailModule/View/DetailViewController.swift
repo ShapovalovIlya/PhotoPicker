@@ -15,25 +15,27 @@ final class DetailViewController: UIViewController {
     //MARK: - Private properties
     private let imageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .white
+        image.backgroundColor = .lightGray
         image.contentMode = .scaleAspectFit
         return image
     }()
     
     private let authorNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = .systemFont(ofSize: 30)
         label.text = "Name Lastname"
         return label
     }()
+    
+    private var locationStackView = UIStackView()
     
     private let locationMark: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "mappin.and.ellipse")
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
+        imageView.tintColor = .lightGray
         imageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return imageView
@@ -43,6 +45,49 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
         label.text = "Location"
+        label.textColor = .lightGray
+        return label
+    }()
+    
+    private var dateStackView = UIStackView()
+    
+    private let dateMark: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage(systemName: "calendar")
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .lightGray
+        imageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return imageView
+    }()
+    
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.text = "DD.MM.YEAR"
+        label.textColor = .lightGray
+        return label
+    }()
+    
+    private var downloadsStackView = UIStackView()
+    
+    private let downloadsMark: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage(systemName: "square.and.arrow.down")
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .lightGray
+        imageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return imageView
+    }()
+    
+    private let downloadsLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.text = "Downloads: 55"
+        label.textColor = .lightGray
         return label
     }()
     
@@ -51,7 +96,13 @@ final class DetailViewController: UIViewController {
         super.loadView()
         
         setupView()
+        setupNavigationBar()
         setConstraints()
+    }
+    
+    //MARK: - Private methods
+    @objc private func favoriteButtonTap() {
+        
     }
 }
 
@@ -64,12 +115,37 @@ private extension DetailViewController {
     
     //MARK: - Setup view
     func setupView() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
+        
+        locationStackView = UIStackView(arrangedSubviews: [locationMark, locationLabel])
+        locationStackView.axis = .horizontal
+        locationStackView.spacing = 10
+        
+        dateStackView = UIStackView(arrangedSubviews: [dateMark, dateLabel])
+        dateStackView.axis = .horizontal
+        dateStackView.spacing = 10
+        
+        downloadsStackView = UIStackView(arrangedSubviews: [downloadsMark, downloadsLabel])
+        downloadsStackView.axis = .horizontal
+        downloadsStackView.spacing = 10
+        
         view.addSubviews([
             imageView,
             authorNameLabel,
-            locationMark,
+            locationStackView,
+            dateStackView,
+            downloadsStackView,
         ])
+    }
+    
+    func setupNavigationBar() {
+        let favoriteButton = UIBarButtonItem(
+            image: UIImage(systemName: "star.fill"),
+            style: .plain,
+            target: self,
+            action: #selector(favoriteButtonTap)
+        )
+        navigationItem.rightBarButtonItem = favoriteButton
     }
     
     //MARK: - Set constraints
@@ -83,9 +159,14 @@ private extension DetailViewController {
             authorNameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             authorNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             
-            locationMark.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 10),
-            locationMark.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            locationStackView.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 10),
+            locationStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             
+            dateStackView.topAnchor.constraint(equalTo: locationStackView.bottomAnchor, constant: 10),
+            dateStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            
+            downloadsStackView.topAnchor.constraint(equalTo: dateStackView.bottomAnchor, constant: 10),
+            downloadsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
         ])
     }
 }
