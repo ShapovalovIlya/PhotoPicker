@@ -23,8 +23,26 @@ final class DetailViewController: UIViewController {
     private let authorNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = .systemFont(ofSize: 30)
         label.text = "Name Lastname"
+        return label
+    }()
+    
+    private let locationMark: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage(systemName: "mappin.and.ellipse")
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .white
+        imageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return imageView
+    }()
+    
+    private let locationLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.text = "Location"
         return label
     }()
     
@@ -50,6 +68,7 @@ private extension DetailViewController {
         view.addSubviews([
             imageView,
             authorNameLabel,
+            locationMark,
         ])
     }
     
@@ -63,6 +82,9 @@ private extension DetailViewController {
             
             authorNameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             authorNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            
+            locationMark.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 10),
+            locationMark.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             
         ])
     }
