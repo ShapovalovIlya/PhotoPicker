@@ -9,7 +9,8 @@ import UIKit
 
 final class LibraryMainViewController: UIViewController {
     
-    var presenter: LibraryPresenterProtocol!
+    var presenter: LibraryViewPresenterProtocol!
+    
     //MARK: - Private properties
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -84,18 +85,18 @@ extension LibraryMainViewController: UICollectionViewDataSource {
         return cell
     }
     
-    
 }
 
 //MARK: - Collection View Delegate
 extension LibraryMainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select item at index: \(indexPath.item)")
+        presenter.tapOnItem()
     }
 }
 
-//MARK: - Library Main View Delegate
-extension LibraryMainViewController: LibraryMainViewDelegate {
+//MARK: - Library View Delegate
+extension LibraryMainViewController: LibraryViewDelegate {
     
 }
 
@@ -117,7 +118,6 @@ private extension LibraryMainViewController {
     
     //MARK: - Setup navigation bar
     func setupNavigationBar() {
-        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .systemBlue
         shouldShowSearchButton(true)
@@ -168,7 +168,7 @@ private extension LibraryMainViewController {
 //MARK: - SwiftUI preview provider
 import SwiftUI
 
-struct ViewControllerProvider: PreviewProvider {
+struct LibraryMainViewControllerProvider: PreviewProvider {
     static var previews: some View {
         ContainerView().edgesIgnoringSafeArea(.all).previewInterfaceOrientation(.portrait)
     }
@@ -176,15 +176,15 @@ struct ViewControllerProvider: PreviewProvider {
     struct ContainerView: UIViewControllerRepresentable{
         let viewController = LibraryMainViewController()
         func makeUIViewController(
-            context: UIViewControllerRepresentableContext<ViewControllerProvider.ContainerView>
+            context: UIViewControllerRepresentableContext<LibraryMainViewControllerProvider.ContainerView>
         ) -> LibraryMainViewController {
             
             return viewController
         }
         
         func updateUIViewController(
-            _ uiViewController: ViewControllerProvider.ContainerView.UIViewControllerType,
-            context: UIViewControllerRepresentableContext<ViewControllerProvider.ContainerView>
+            _ uiViewController: LibraryMainViewControllerProvider.ContainerView.UIViewControllerType,
+            context: UIViewControllerRepresentableContext<LibraryMainViewControllerProvider.ContainerView>
         ) {
             
         }

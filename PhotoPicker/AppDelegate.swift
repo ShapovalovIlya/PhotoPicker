@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let barAppearance = UINavigationBar.appearance()
             barAppearance.isTranslucent = false
             barAppearance.clipsToBounds = false
+            barAppearance.isHidden = false
             
             let titleTextAttributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor.systemBlue,

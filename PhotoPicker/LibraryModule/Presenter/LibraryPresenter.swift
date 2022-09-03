@@ -6,23 +6,27 @@
 //
 
 import Foundation
-protocol LibraryMainViewDelegate: AnyObject {
+
+protocol LibraryViewDelegate: AnyObject {
     
 }
 
-protocol LibraryPresenterProtocol {
-    init(view: LibraryMainViewDelegate, router: LibraryRouter)
+protocol LibraryViewPresenterProtocol {
+    init(view: LibraryViewDelegate, router: LibraryRouter)
+    func tapOnItem()
 }
 
-final class LibraryPresenter: LibraryPresenterProtocol {
+final class LibraryPresenter: LibraryViewPresenterProtocol {
     
     var router: LibraryRouter?
-    weak var view: LibraryMainViewDelegate?
+    weak var view: LibraryViewDelegate?
     
-    init(view: LibraryMainViewDelegate, router: LibraryRouter) {
+    init(view: LibraryViewDelegate, router: LibraryRouter) {
         self.view = view
         self.router = router
     }
     
-    
+    func tapOnItem() {
+        router?.showDetailViewController()
+    }
 }
