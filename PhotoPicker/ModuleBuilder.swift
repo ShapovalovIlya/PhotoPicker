@@ -8,14 +8,22 @@
 import UIKit
 
 protocol ModuleBuilderInterface {
-    func makeLibraryMainVC(router: RouterProtocol) -> UIViewController
+    func makeLibraryViewController(router: LibraryRouter) -> UIViewController
+    func makeDetailViewController(router: DetailRouter) -> UIViewController
 }
 
 final class ModuleBuilder: ModuleBuilderInterface {
-    func makeLibraryMainVC(router: RouterProtocol) -> UIViewController{
+    func makeLibraryViewController(router: LibraryRouter) -> UIViewController {
         let view = LibraryMainViewController()
+        let presenter = LibraryPresenter(view: view, router: router)
+        view.presenter = presenter
         return view
     }
     
-    
+    func makeDetailViewController(router: DetailRouter) -> UIViewController {
+        let view = DetailViewController()
+        let presenter = DetailPresenter(view: view, router: router)
+        view.presenter = presenter
+        return view
+    }
 }

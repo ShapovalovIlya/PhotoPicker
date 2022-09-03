@@ -12,7 +12,15 @@ protocol RouterMain {
     var moduleBuilder: ModuleBuilderInterface? { get set }
 }
 
-typealias RouterProtocol = RouterMain
+protocol LibraryRouter {
+    func showDetailViewController()
+}
+
+protocol DetailRouter {
+    
+}
+
+typealias RouterProtocol = RouterMain & LibraryRouter & DetailRouter
 
 final class Router: RouterProtocol {
     
@@ -24,14 +32,24 @@ final class Router: RouterProtocol {
         self.moduleBuilder = moduleBuilder
     }
     
-    func initialLibraryVC() {
+    func initialViewController() {
         guard
             let navigationController = navigationController,
-            let mainViewController = moduleBuilder?.makeLibraryMainVC(router: self)
+            let mainViewController = moduleBuilder?.makeLibraryViewController(router: self)
         else {
             return
         }
         navigationController.viewControllers = [mainViewController]
         navigationController.tabBarItem = TabBarItems.library.item
+    }
+    
+    func showDetailViewController() {
+        guard
+            let navigationController = navigationController,
+            let detailViewController = moduleBuilder?.makeDetailViewController(router: self)
+        else {
+            return
+        }
+        navigationController.pushViewController(detailViewController, animated: true)
     }
 }
