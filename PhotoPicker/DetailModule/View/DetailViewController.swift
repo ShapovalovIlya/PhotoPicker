@@ -10,7 +10,7 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     //MARK: - Public properties
-    var presenter: DetailViewPresenterProtocol!
+    var presenter: DetailPresenterProtocol!
     
     //MARK: - Private properties
     private let imageView: UIImageView = {

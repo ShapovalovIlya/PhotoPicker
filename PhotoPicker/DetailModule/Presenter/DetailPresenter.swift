@@ -11,11 +11,11 @@ protocol DetailViewDelegate: AnyObject {
     
 }
 
-protocol DetailViewPresenterProtocol {
+protocol DetailPresenterProtocol {
     init(view: DetailViewDelegate, router: DetailRouter)
 }
 
-final class DetailPresenter: DetailViewPresenterProtocol {
+final class DetailPresenter: DetailPresenterProtocol {
     
     var router: DetailRouter?
     weak var view: DetailViewDelegate?

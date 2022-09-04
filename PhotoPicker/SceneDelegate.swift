@@ -18,12 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let moduleBuilder = ModuleBuilder()
         let libraryNavigationController = UINavigationController()
-//        let favoriteNavigationController = UINavigationController()
+        let favoriteNavigationController = UINavigationController()
         
         let libraryRouter = Router(navigationController: libraryNavigationController, moduleBuilder: moduleBuilder)
         libraryRouter.initialViewController()
         
-        let tabs = [libraryNavigationController]
+        let favoriteRouter = Router(navigationController: favoriteNavigationController, moduleBuilder: moduleBuilder)
+        favoriteRouter.showFavoriteViewController()
+        
+        let tabs = [libraryNavigationController, favoriteNavigationController]
         let tabBar = TabBarController(viewControllers: tabs)
         
         window?.rootViewController = tabBar

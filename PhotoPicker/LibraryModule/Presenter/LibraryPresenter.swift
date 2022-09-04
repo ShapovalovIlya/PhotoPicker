@@ -11,12 +11,12 @@ protocol LibraryViewDelegate: AnyObject {
     
 }
 
-protocol LibraryViewPresenterProtocol {
+protocol LibraryPresenterProtocol {
     init(view: LibraryViewDelegate, router: LibraryRouter)
     func tapOnItem()
 }
 
-final class LibraryPresenter: LibraryViewPresenterProtocol {
+final class LibraryPresenter: LibraryPresenterProtocol {
     
     var router: LibraryRouter?
     weak var view: LibraryViewDelegate?
