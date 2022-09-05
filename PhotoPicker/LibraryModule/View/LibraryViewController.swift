@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class LibraryViewController: UIViewController {
     
-    var presenter: LibraryPresenterProtocol!
+    var presenter: LibraryPresenterProtocol?
     
     //MARK: - Private properties
     private let searchBar: UISearchBar = {
@@ -54,19 +55,19 @@ extension LibraryViewController: UISearchBarDelegate {
 extension LibraryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.getNumberOfItems() ?? 0
+        return presenter?.getNumberOfItems() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
-        let imageURL = presenter.getItemImageURL(byIndex: indexPath.item)
-        print(imageURL)
-        cell.backgroundColor = .systemGreen
-        let image = UIImage(systemName: "keyboard")
-        let imageView = UIImageView(image: image)
+        cell.backgroundColor = .lightGray
+        cell.layer.cornerRadius = 10
+        let imageView = UIImageView()
+        let imageURL = presenter?.getItemImageURL(byIndex: indexPath.item)
+        let placeHolder = UIImage(systemName: "square.and.arrow.down")
+        imageView.kf.setImage(with: imageURL, placeholder: placeHolder)
         imageView.contentMode = .scaleAspectFit
         cell.backgroundView = imageView
-        cell.layer.cornerRadius = 10
         return cell
     }
     
@@ -76,7 +77,7 @@ extension LibraryViewController: UICollectionViewDataSource {
 extension LibraryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select item at index: \(indexPath.item)")
-        presenter.pushDetailView()
+        presenter?.pushDetailView()
     }
 }
 
