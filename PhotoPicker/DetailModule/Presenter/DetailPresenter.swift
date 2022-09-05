@@ -25,5 +25,7 @@ final class DetailPresenter: DetailPresenterProtocol {
         self.router = router
     }
     
-    
+    func toggleFavoriteButton() {
+        
+    }
 }

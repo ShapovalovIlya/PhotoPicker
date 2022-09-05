@@ -34,4 +34,11 @@ final class ModuleBuilder: ModuleBuilderInterface {
         view.presenter = presenter
         return view
     }
+    
+    func makeAlertMessage() -> UIAlertController {
+        let alertController = UIAlertController(
+            title: <#T##String?#>,
+            message: <#T##String?#>,
+            preferredStyle: <#T##UIAlertController.Style#>)
+    }
 }

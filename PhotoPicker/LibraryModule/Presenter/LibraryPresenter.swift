@@ -13,7 +13,7 @@ protocol LibraryViewDelegate: AnyObject {
 
 protocol LibraryPresenterProtocol {
     init(view: LibraryViewDelegate, router: LibraryRouter)
-    func tapOnItem()
+    func pushDetailView()
 }
 
 final class LibraryPresenter: LibraryPresenterProtocol {
@@ -26,7 +26,7 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         self.router = router
     }
     
-    func tapOnItem() {
+    func pushDetailView() {
         router?.showDetailViewController()
     }
 }

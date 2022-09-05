@@ -13,6 +13,7 @@ protocol FavoriteViewDelegate: AnyObject {
 
 protocol FavoritePresenterProtocol: AnyObject {
     init(view: FavoriteViewDelegate, router: FavoriteRouter)
+    func pushDetailView()
 }
 
 final class FavoritePresenter: FavoritePresenterProtocol {
@@ -25,5 +26,8 @@ final class FavoritePresenter: FavoritePresenterProtocol {
         self.router = router
     }
     
+    func pushDetailView() {
+        router?.showDetailViewController()
+    }
     
 }
