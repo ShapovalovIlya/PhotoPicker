@@ -14,6 +14,7 @@ protocol RouterMain {
 
 protocol LibraryRouter {
     func showDetailViewController()
+    func showErrorAlert()
 }
 
 protocol DetailRouter {
@@ -22,6 +23,7 @@ protocol DetailRouter {
 
 protocol FavoriteRouter {
     func showDetailViewController()
+    func showErrorAlert()
 }
 
 typealias RouterProtocol = RouterMain & LibraryRouter & DetailRouter & FavoriteRouter
@@ -75,14 +77,14 @@ final class Router: RouterProtocol {
         else {
             return
         }
-        
         navigationController.present(alertViewController, animated: true)
-        
-        if type != AlertType.Error {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 alertViewController.dismiss(animated: true)
             }
         }
+    
+    func showErrorAlert() {
+        
     }
     
 }

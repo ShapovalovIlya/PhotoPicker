@@ -38,44 +38,26 @@ final class ModuleBuilder: ModuleBuilderInterface {
     
     func makeAlertMessage(ofType type: AlertType) -> UIAlertController {
         let alertController = UIAlertController(
-            title: type.title,
+            title: nil,
             message: type.message,
             preferredStyle: .alert
         )
-        
-        if type == AlertType.Error {
-            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(alertAction)
-        }
         
         return alertController
     }
 }
 
 enum AlertType {
-    case Error
     case Add
     case Delete
     
-    var title: String? {
-        switch self {
-        case .Error:
-            return "Error"
-        case .Add:
-            return nil
-        case .Delete:
-            return nil
-        }
-    }
-    
     var message: String {
         switch self {
-        case .Error:
-            return "Error"
         case .Add:
             return "Added to favorite!"
         case .Delete:
-            return "Removed!"
+            return "Removed from favorite!"
         }
     }
+    
 }

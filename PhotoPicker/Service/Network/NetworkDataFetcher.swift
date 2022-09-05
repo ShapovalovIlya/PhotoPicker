@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DataFetcherServiceProtocol {
-    func fetchRandomPhoto(complition: @escaping(Result<PhotoData?, Error>) -> Void)
+    func fetchPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
 }
 
 final class DataFetcherService: DataFetcherServiceProtocol {
@@ -21,8 +21,8 @@ final class DataFetcherService: DataFetcherServiceProtocol {
         self.dataFetcher = dataFetcher
     }
     
-    func fetchRandomPhoto(complition: @escaping(Result<PhotoData?, Error>) -> Void) {
-        let fullURL = "\(baseURL)/photos/random?client_id=\(API.accessKey)"
+    func fetchPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
+        let fullURL = "\(baseURL)/photos?client_id=\(API.accessKey)"
         dataFetcher?.fetchGnericJSONData(urlString: fullURL, response: complition)
     }
     
