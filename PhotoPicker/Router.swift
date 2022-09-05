@@ -20,7 +20,11 @@ protocol DetailRouter {
     
 }
 
-typealias RouterProtocol = RouterMain & LibraryRouter & DetailRouter
+protocol FavoriteRouter {
+    func showDetailViewController()
+}
+
+typealias RouterProtocol = RouterMain & LibraryRouter & DetailRouter & FavoriteRouter
 
 final class Router: RouterProtocol {
     
@@ -52,4 +56,16 @@ final class Router: RouterProtocol {
         }
         navigationController.pushViewController(detailViewController, animated: true)
     }
+    
+    func showFavoriteViewController() {
+        guard
+            let navigationController = navigationController,
+            let favoriteViewController = moduleBuilder?.makeFavoriteViewController(router: self)
+        else {
+            return
+        }
+        navigationController.viewControllers = [favoriteViewController]
+        navigationController.tabBarItem = TabBarItems.favorite.item
+    }
+    
 }

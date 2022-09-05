@@ -62,3 +62,31 @@ final class TabBarController: UITabBarController {
     }
 }
 
+//MARK: - SwiftUI preview provider
+import SwiftUI
+
+struct TabBarControllerProvider: PreviewProvider {
+    static var previews: some View {
+        ContainerView().edgesIgnoringSafeArea(.all).previewInterfaceOrientation(.portrait)
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable{
+        
+        let viewController = TabBarController(viewControllers: [LibraryViewController()])
+        func makeUIViewController(
+            context: UIViewControllerRepresentableContext<TabBarControllerProvider.ContainerView>
+        ) -> TabBarController {
+            
+            return viewController
+        }
+        
+        func updateUIViewController(
+            _ uiViewController: TabBarControllerProvider.ContainerView.UIViewControllerType,
+            context: UIViewControllerRepresentableContext<TabBarControllerProvider.ContainerView>
+        ) {
+            
+        }
+    }
+    
+}
+

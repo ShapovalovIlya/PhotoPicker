@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class LibraryMainViewController: UIViewController {
+final class LibraryViewController: UIViewController {
     
-    var presenter: LibraryViewPresenterProtocol!
+    var presenter: LibraryPresenterProtocol!
     
     //MARK: - Private properties
     private let searchBar: UISearchBar = {
@@ -37,27 +37,10 @@ final class LibraryMainViewController: UIViewController {
         searchBar.becomeFirstResponder()
     }
     
-    private func shouldShowSearchButton(_ shouldShow: Bool) {
-        if shouldShow {
-            let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowSearchBar))
-            
-            navigationItem.rightBarButtonItem = searchButton
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
-    }
-    
-    private func shouldShowSearchBar(_ shouldShow: Bool) {
-        shouldShowSearchButton(!shouldShow)
-        searchBar.showsCancelButton = shouldShow
-        navigationItem.titleView = shouldShow ? searchBar : nil
-    }
-    
-    
 }
 
 //MARK: - Search Bar Delegate
-extension LibraryMainViewController: UISearchBarDelegate {
+extension LibraryViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         shouldShowSearchBar(false)
     }
@@ -68,7 +51,7 @@ extension LibraryMainViewController: UISearchBarDelegate {
 }
 
 //MARK: - Collection View Data Source
-extension LibraryMainViewController: UICollectionViewDataSource {
+extension LibraryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10
@@ -88,23 +71,24 @@ extension LibraryMainViewController: UICollectionViewDataSource {
 }
 
 //MARK: - Collection View Delegate
-extension LibraryMainViewController: UICollectionViewDelegate {
+extension LibraryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select item at index: \(indexPath.item)")
-        presenter.tapOnItem()
+        presenter.pushDetailView()
     }
 }
 
 //MARK: - Library View Delegate
-extension LibraryMainViewController: LibraryViewDelegate {
+extension LibraryViewController: LibraryViewDelegate {
     
 }
 
-private extension LibraryMainViewController {
+private extension LibraryViewController {
     
     //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .white
+        self.title = "Photo Library"
         view.addSubview(collectionView)
     }
     
@@ -121,6 +105,22 @@ private extension LibraryMainViewController {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .systemBlue
         shouldShowSearchButton(true)
+    }
+    
+    func shouldShowSearchButton(_ shouldShow: Bool) {
+        if shouldShow {
+            let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowSearchBar))
+            
+            navigationItem.rightBarButtonItem = searchButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    func shouldShowSearchBar(_ shouldShow: Bool) {
+        shouldShowSearchButton(!shouldShow)
+        searchBar.showsCancelButton = shouldShow
+        navigationItem.titleView = shouldShow ? searchBar : nil
     }
     
     //MARK: - Set delegates
@@ -168,23 +168,23 @@ private extension LibraryMainViewController {
 //MARK: - SwiftUI preview provider
 import SwiftUI
 
-struct LibraryMainViewControllerProvider: PreviewProvider {
+struct LibraryViewControllerProvider: PreviewProvider {
     static var previews: some View {
         ContainerView().edgesIgnoringSafeArea(.all).previewInterfaceOrientation(.portrait)
     }
     
     struct ContainerView: UIViewControllerRepresentable{
-        let viewController = LibraryMainViewController()
+        let viewController = LibraryViewController()
         func makeUIViewController(
-            context: UIViewControllerRepresentableContext<LibraryMainViewControllerProvider.ContainerView>
-        ) -> LibraryMainViewController {
+            context: UIViewControllerRepresentableContext<LibraryViewControllerProvider.ContainerView>
+        ) -> LibraryViewController {
             
             return viewController
         }
         
         func updateUIViewController(
-            _ uiViewController: LibraryMainViewControllerProvider.ContainerView.UIViewControllerType,
-            context: UIViewControllerRepresentableContext<LibraryMainViewControllerProvider.ContainerView>
+            _ uiViewController: LibraryViewControllerProvider.ContainerView.UIViewControllerType,
+            context: UIViewControllerRepresentableContext<LibraryViewControllerProvider.ContainerView>
         ) {
             
         }

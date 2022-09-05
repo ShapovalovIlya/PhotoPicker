@@ -10,7 +10,7 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     //MARK: - Public properties
-    var presenter: DetailViewPresenterProtocol!
+    var presenter: DetailPresenterProtocol!
     
     //MARK: - Private properties
     private let imageView: UIImageView = {
@@ -116,6 +116,7 @@ private extension DetailViewController {
     //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .white
+        self.title = "Detail"
         
         locationStackView = UIStackView(arrangedSubviews: [locationMark, locationLabel])
         locationStackView.axis = .horizontal
