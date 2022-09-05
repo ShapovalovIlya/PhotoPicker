@@ -8,8 +8,8 @@
 import Foundation
 
 protocol DataFetcher {
-    func fetchGnericJSONData<T: Decodable>(urlString: String, authToken: String, response: @escaping (Result<T?, Error>) -> Void)
-    func sendJSONData(urlString: String, authToken: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void)
+    func fetchGnericJSONData<T: Decodable>(urlString: String, response: @escaping (Result<T?, Error>) -> Void)
+    func sendJSONData(urlString: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void)
 }
 
 class NetworkDataManager: DataFetcher {
@@ -20,8 +20,8 @@ class NetworkDataManager: DataFetcher {
         self.networking = networking
     }
     
-    func fetchGnericJSONData<T: Decodable>(urlString: String, authToken: String, response: @escaping(Result<T?, Error>) -> Void) {
-        networking.GETrequest(urlString: urlString, authToken: authToken) { result in
+    func fetchGnericJSONData<T: Decodable>(urlString: String, response: @escaping(Result<T?, Error>) -> Void) {
+        networking.GETrequest(urlString: urlString) { result in
             switch result {
             case .failure(let error):
                 print("Error received requesting Data: \(error.localizedDescription)")
@@ -33,9 +33,9 @@ class NetworkDataManager: DataFetcher {
         }
     }
     
-    func sendJSONData(urlString: String, authToken: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void) {
+    func sendJSONData(urlString: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void) {
         guard let encodedData = encodeJSON(from: data) else { return }
-        networking.PUTRequest(urlString: urlString, authToken: authToken, data: encodedData) { result in
+        networking.PUTRequest(urlString: urlString, data: encodedData) { result in
             switch result {
             case .failure(let error):
                 response(.failure(error))

@@ -8,22 +8,22 @@
 import Foundation
 
 protocol Networking {
-    func GETrequest(urlString: String, authToken: String, completion: @escaping(Result<Data?, Error>) -> Void)
-    func PUTRequest(urlString: String, authToken: String, data: Data, complition: @escaping(Result<Bool, Error>) -> Void)
+    func GETrequest(urlString: String, completion: @escaping(Result<Data?, Error>) -> Void)
+    func PUTRequest(urlString: String, data: Data, complition: @escaping(Result<Bool, Error>) -> Void)
 }
 
 class NetworkService: Networking {
     
-    func GETrequest(urlString: String, authToken: String, completion: @escaping (Result<Data?, Error>) -> Void) {
+    func GETrequest(urlString: String, completion: @escaping (Result<Data?, Error>) -> Void) {
         guard let url = URL(string: urlString) else { return }
-        let request = createURLRequest(url: url, authToken: authToken)
+        let request = createURLRequest(url: url)
         let task = createDataTask(from: request, completion: completion)
         task.resume()
     }
     
-    func PUTRequest(urlString: String, authToken: String, data: Data, complition: @escaping(Result<Bool, Error>) -> Void) {
+    func PUTRequest(urlString: String, data: Data, complition: @escaping(Result<Bool, Error>) -> Void) {
         guard let url = URL(string: urlString) else { return }
-        let request = createURLRequest(url: url, authToken: authToken, method: .PUT)
+        let request = createURLRequest(url: url, method: .PUT)
         let task = createUploadTask(from: request, with: data, complition: complition)
         task.resume()
     }
@@ -66,7 +66,7 @@ class NetworkService: Networking {
         }
     }
     
-    private func createURLRequest(url: URL, authToken: String, method: HTTPMethod = HTTPMethod.GET) -> URLRequest {
+    private func createURLRequest(url: URL, method: HTTPMethod = HTTPMethod.GET) -> URLRequest {
         var request = URLRequest(url: url)
         
         switch method {

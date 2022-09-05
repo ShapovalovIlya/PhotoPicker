@@ -21,5 +21,9 @@ final class DataFetcherService {
         self.dataFetcher = dataFetcher
     }
     
+    func fetchRandomPhoto() {
+        let fullURL = "\(baseURL)/photos/random?client_id=\(API.accessKey)"
+        
+    }
     
 }

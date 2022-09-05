@@ -188,9 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				8672C3EC28C619E30050B23B /* Data */,
-				8672C3E328C613830050B23B /* NetworkDataManager.swift */,
-				8672C3E028C613830050B23B /* NetworkService.swift */,
-				8672C3E828C614480050B23B /* NetworkDataFetcher.swift */,
+				8672C3EE28C6516A0050B23B /* Network */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -200,6 +198,16 @@
 			children = (
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		8672C3EE28C6516A0050B23B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8672C3E328C613830050B23B /* NetworkDataManager.swift */,
+				8672C3E028C613830050B23B /* NetworkService.swift */,
+				8672C3E828C614480050B23B /* NetworkDataFetcher.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
