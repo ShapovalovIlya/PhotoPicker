@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AdapterProtocol {
-    func getRandomPhoto(complition: @escaping(Result<PhotoModel, Error>) -> Void)
+    func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void)
 }
 
 final class Adapter: AdapterProtocol {
@@ -19,32 +19,37 @@ final class Adapter: AdapterProtocol {
         self.dataFetcher = dataFetcher
     }
     
-    func getRandomPhoto(complition: @escaping(Result<PhotoModel, Error>) -> Void) {
-        dataFetcher?.fetchRandomPhoto { result in
+    func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
+        dataFetcher?.fetchPhotos { result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
-            case .success(let decodedPhoto):
-                guard
-                    let photo = decodedPhoto,
-                    let thumbImageURL = URL(string: photo.imageURLs.thumb),
-                    let regularImageURL = URL(string: photo.imageURLs.regular)
-                else {
-                    return
+            case .success(let decodedPhotos):
+                var photosArray = [PhotoModel]()
+                guard let photos = decodedPhotos else { return }
+                
+                for photo in photos {
+                    
+                    guard
+                        let thumbImageURL = URL(string: photo.imageURLs.thumb),
+                        let regularImageURL = URL(string: photo.imageURLs.regular)
+                    else {
+                        continue
+                    }
+                    
+                    let newPhoto = PhotoModel(
+                        id: photo.id,
+                        createAt: photo.createdAt,
+                        backgroundHEX: photo.backgroundColor,
+                        downloads: photo.downloads ?? 0,
+                        location: photo.location?.name ?? "unknown",
+                        thumbImageURL: thumbImageURL,
+                        regularImageURL: regularImageURL,
+                        author: photo.author.name
+                    )
+                    photosArray.append(newPhoto)
                 }
-                
-                let newPhoto = PhotoModel(
-                    id: photo.id,
-                    createAt: photo.createdAt,
-                    backgroundHEX: photo.backgroundColor,
-                    downloads: photo.downloads,
-                    location: photo.location.name ?? "unknown",
-                    thumbImageURL: thumbImageURL,
-                    regularImageURL: regularImageURL,
-                    author: photo.author.name
-                )
-                
-                complition(.success(newPhoto))
+                complition(.success(photosArray))
             }
         }
     }

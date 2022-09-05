@@ -15,7 +15,7 @@ protocol DetailPresenterProtocol {
     init(view: DetailViewDelegate, router: DetailRouter)
     func addPhotoToFavorite()
     func removePhotoFromFavorite()
-    func showAlert()
+    
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -36,7 +36,5 @@ final class DetailPresenter: DetailPresenterProtocol {
         router?.showAlertMessage(ofType: .Delete)
     }
     
-    func showAlert() {
-        router?.showAlertMessage(ofType: .Error)
-    }
+    
 }

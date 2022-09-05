@@ -17,7 +17,9 @@ protocol ModuleBuilderInterface {
 final class ModuleBuilder: ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController {
         let view = LibraryViewController()
-        let presenter = LibraryPresenter(view: view, router: router)
+        let adapter = Adapter()
+        let model = ModelController(adapter: adapter)
+        let presenter = LibraryPresenter(view: view, router: router, model: model)
         view.presenter = presenter
         return view
     }
@@ -36,46 +38,30 @@ final class ModuleBuilder: ModuleBuilderInterface {
         return view
     }
     
+    
+    
     func makeAlertMessage(ofType type: AlertType) -> UIAlertController {
         let alertController = UIAlertController(
-            title: type.title,
+            title: nil,
             message: type.message,
             preferredStyle: .alert
         )
-        
-        if type == AlertType.Error {
-            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(alertAction)
-        }
         
         return alertController
     }
 }
 
 enum AlertType {
-    case Error
     case Add
     case Delete
     
-    var title: String? {
-        switch self {
-        case .Error:
-            return "Error"
-        case .Add:
-            return nil
-        case .Delete:
-            return nil
-        }
-    }
-    
     var message: String {
         switch self {
-        case .Error:
-            return "Error"
         case .Add:
             return "Added to favorite!"
         case .Delete:
-            return "Removed!"
+            return "Removed from favorite!"
         }
     }
+    
 }

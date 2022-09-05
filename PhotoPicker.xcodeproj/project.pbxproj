@@ -29,6 +29,7 @@
 		8672C3F028C657670050B23B /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3EF28C657670050B23B /* PhotoData.swift */; };
 		8672C3F228C66CC60050B23B /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3F128C66CC60050B23B /* PhotoModel.swift */; };
 		8672C3F428C66CDA0050B23B /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3F328C66CDA0050B23B /* Adapter.swift */; };
+		8672C3F628C6929A0050B23B /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3F528C6929A0050B23B /* ModelController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		8672C3EF28C657670050B23B /* PhotoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoData.swift; sourceTree = "<group>"; };
 		8672C3F128C66CC60050B23B /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		8672C3F328C66CDA0050B23B /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
+		8672C3F528C6929A0050B23B /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +94,6 @@
 				8672C38928C29B830050B23B /* AppDelegate.swift */,
 				8672C38B28C29B830050B23B /* SceneDelegate.swift */,
 				8672C39D28C29D7F0050B23B /* TabBarController.swift */,
-				8672C39F28C29DAC0050B23B /* ModuleBuilder.swift */,
-				8672C3A128C29E1C0050B23B /* Router.swift */,
 				8672C3A528C2A4C20050B23B /* LibraryModule */,
 				8672C3B428C395990050B23B /* FavoriteModule */,
 				8672C3AF28C2DDE70050B23B /* DetailModule */,
@@ -193,6 +193,8 @@
 		8672C3DF28C613540050B23B /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				8672C39F28C29DAC0050B23B /* ModuleBuilder.swift */,
+				8672C3A128C29E1C0050B23B /* Router.swift */,
 				8672C3F328C66CDA0050B23B /* Adapter.swift */,
 				8672C3EC28C619E30050B23B /* Model */,
 				8672C3EE28C6516A0050B23B /* Network */,
@@ -205,6 +207,7 @@
 			children = (
 				8672C3EF28C657670050B23B /* PhotoData.swift */,
 				8672C3F128C66CC60050B23B /* PhotoModel.swift */,
+				8672C3F528C6929A0050B23B /* ModelController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8672C3F228C66CC60050B23B /* PhotoModel.swift in Sources */,
+				8672C3F628C6929A0050B23B /* ModelController.swift in Sources */,
 				8672C38E28C29B830050B23B /* LibraryViewController.swift in Sources */,
 				8672C3E728C613830050B23B /* NetworkDataManager.swift in Sources */,
 				8672C3A028C29DAC0050B23B /* ModuleBuilder.swift in Sources */,
