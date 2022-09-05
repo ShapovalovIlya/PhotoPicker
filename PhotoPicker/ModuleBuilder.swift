@@ -11,6 +11,7 @@ protocol ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController
     func makeDetailViewController(router: DetailRouter) -> UIViewController
     func makeFavoriteViewController(router: FavoriteRouter) -> UITableViewController
+    func makeAlertMessage(ofType type: AlertType) -> UIAlertController
 }
 
 final class ModuleBuilder: ModuleBuilderInterface {
@@ -35,10 +36,46 @@ final class ModuleBuilder: ModuleBuilderInterface {
         return view
     }
     
-    func makeAlertMessage() -> UIAlertController {
+    func makeAlertMessage(ofType type: AlertType) -> UIAlertController {
         let alertController = UIAlertController(
-            title: <#T##String?#>,
-            message: <#T##String?#>,
-            preferredStyle: <#T##UIAlertController.Style#>)
+            title: type.title,
+            message: type.message,
+            preferredStyle: .alert
+        )
+        
+        if type == AlertType.Error {
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(alertAction)
+        }
+        
+        return alertController
+    }
+}
+
+enum AlertType {
+    case Error
+    case Add
+    case Delete
+    
+    var title: String? {
+        switch self {
+        case .Error:
+            return "Error"
+        case .Add:
+            return nil
+        case .Delete:
+            return nil
+        }
+    }
+    
+    var message: String {
+        switch self {
+        case .Error:
+            return "Error"
+        case .Add:
+            return "Added to favorite!"
+        case .Delete:
+            return "Removed!"
+        }
     }
 }

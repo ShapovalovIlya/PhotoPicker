@@ -102,7 +102,7 @@ final class DetailViewController: UIViewController {
     
     //MARK: - Private methods
     @objc private func favoriteButtonTap() {
-        
+        presenter.showAlert()
     }
 }
 

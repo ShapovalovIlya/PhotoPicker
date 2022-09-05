@@ -13,6 +13,9 @@ protocol DetailViewDelegate: AnyObject {
 
 protocol DetailPresenterProtocol {
     init(view: DetailViewDelegate, router: DetailRouter)
+    func addPhotoToFavorite()
+    func removePhotoFromFavorite()
+    func showAlert()
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
@@ -25,7 +28,15 @@ final class DetailPresenter: DetailPresenterProtocol {
         self.router = router
     }
     
-    func toggleFavoriteButton() {
-        
+    func addPhotoToFavorite() {
+        router?.showAlertMessage(ofType: .Add)
+    }
+    
+    func removePhotoFromFavorite() {
+        router?.showAlertMessage(ofType: .Delete)
+    }
+    
+    func showAlert() {
+        router?.showAlertMessage(ofType: .Error)
     }
 }

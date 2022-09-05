@@ -17,7 +17,7 @@ protocol LibraryRouter {
 }
 
 protocol DetailRouter {
-    
+    func showAlertMessage(ofType type: AlertType)
 }
 
 protocol FavoriteRouter {
@@ -47,6 +47,17 @@ final class Router: RouterProtocol {
         navigationController.tabBarItem = TabBarItems.library.item
     }
     
+    func showFavoriteViewController() {
+        guard
+            let navigationController = navigationController,
+            let favoriteViewController = moduleBuilder?.makeFavoriteViewController(router: self)
+        else {
+            return
+        }
+        navigationController.viewControllers = [favoriteViewController]
+        navigationController.tabBarItem = TabBarItems.favorite.item
+    }
+    
     func showDetailViewController() {
         guard
             let navigationController = navigationController,
@@ -57,15 +68,21 @@ final class Router: RouterProtocol {
         navigationController.pushViewController(detailViewController, animated: true)
     }
     
-    func showFavoriteViewController() {
+    func showAlertMessage(ofType type: AlertType) {
         guard
             let navigationController = navigationController,
-            let favoriteViewController = moduleBuilder?.makeFavoriteViewController(router: self)
+            let alertViewController = moduleBuilder?.makeAlertMessage(ofType: type)
         else {
             return
         }
-        navigationController.viewControllers = [favoriteViewController]
-        navigationController.tabBarItem = TabBarItems.favorite.item
+        
+        navigationController.present(alertViewController, animated: true)
+        
+        if type != AlertType.Error {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                alertViewController.dismiss(animated: true)
+            }
+        }
     }
     
 }
