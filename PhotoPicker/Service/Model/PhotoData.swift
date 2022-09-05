@@ -28,7 +28,7 @@ struct PhotoData: Decodable {
 }
 
 struct Location: Decodable {
-    let name: String
+    let name: String?
 }
 
 struct imageURL: Decodable {

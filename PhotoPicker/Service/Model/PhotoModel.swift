@@ -15,6 +15,7 @@ struct PhotoModel {
     let location: String
     let imageURL: URL
     let author: String
+    let isFavorite: Bool = false
     
     init(id: String, createAt: String, backgroundHEX: String, downloads: Int, location: String, imageURL: URL, author: String) {
         self.id = id

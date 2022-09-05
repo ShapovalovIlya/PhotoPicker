@@ -38,7 +38,7 @@ final class Adapter: AdapterProtocol {
                     createAt: photo.createdAt,
                     backgroundHEX: photo.backgroundColor,
                     downloads: photo.downloads,
-                    location: photo.location.name,
+                    location: photo.location.name ?? "unknown",
                     imageURL: imageURL,
                     author: photo.author.name
                 )
@@ -67,7 +67,7 @@ final class Adapter: AdapterProtocol {
                     createAt: photo.createdAt,
                     backgroundHEX: photo.backgroundColor,
                     downloads: photo.downloads,
-                    location: photo.location.name,
+                    location: photo.location.name ?? "unknown",
                     imageURL: imageURL,
                     author: photo.author.name
                 )
