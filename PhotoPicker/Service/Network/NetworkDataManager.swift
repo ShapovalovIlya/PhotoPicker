@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol DataFetcher {
+protocol DataManager {
     func fetchGnericJSONData<T: Decodable>(urlString: String, response: @escaping (Result<T?, Error>) -> Void)
     func sendJSONData(urlString: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void)
 }
 
-class NetworkDataManager: DataFetcher {
+class NetworkDataManager: DataManager {
     
     var networking: Networking!
     
