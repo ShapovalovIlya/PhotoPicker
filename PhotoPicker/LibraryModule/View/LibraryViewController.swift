@@ -37,23 +37,6 @@ final class LibraryViewController: UIViewController {
         searchBar.becomeFirstResponder()
     }
     
-    private func shouldShowSearchButton(_ shouldShow: Bool) {
-        if shouldShow {
-            let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowSearchBar))
-            
-            navigationItem.rightBarButtonItem = searchButton
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
-    }
-    
-    private func shouldShowSearchBar(_ shouldShow: Bool) {
-        shouldShowSearchButton(!shouldShow)
-        searchBar.showsCancelButton = shouldShow
-        navigationItem.titleView = shouldShow ? searchBar : nil
-    }
-    
-    
 }
 
 //MARK: - Search Bar Delegate
@@ -105,6 +88,7 @@ private extension LibraryViewController {
     //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .white
+        self.title = "Photo Library"
         view.addSubview(collectionView)
     }
     
@@ -121,6 +105,22 @@ private extension LibraryViewController {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .systemBlue
         shouldShowSearchButton(true)
+    }
+    
+    func shouldShowSearchButton(_ shouldShow: Bool) {
+        if shouldShow {
+            let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowSearchBar))
+            
+            navigationItem.rightBarButtonItem = searchButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    func shouldShowSearchBar(_ shouldShow: Bool) {
+        shouldShowSearchButton(!shouldShow)
+        searchBar.showsCancelButton = shouldShow
+        navigationItem.titleView = shouldShow ? searchBar : nil
     }
     
     //MARK: - Set delegates

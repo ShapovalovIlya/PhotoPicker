@@ -13,7 +13,7 @@ class FavoriteViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "Favorite photos"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
     }
 
@@ -29,7 +29,7 @@ class FavoriteViewController: UITableViewController {
         let image = UIImage(systemName: "person.circle")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        
+        imageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         let authorNameLabel = UILabel()
         authorNameLabel.text = "Name Lastname"
         authorNameLabel.font = .systemFont(ofSize: 20)
@@ -45,6 +45,7 @@ class FavoriteViewController: UITableViewController {
 //MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

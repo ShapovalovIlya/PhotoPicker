@@ -116,6 +116,7 @@ private extension DetailViewController {
     //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .white
+        self.title = "Detail"
         
         locationStackView = UIStackView(arrangedSubviews: [locationMark, locationLabel])
         locationStackView.axis = .horizontal
