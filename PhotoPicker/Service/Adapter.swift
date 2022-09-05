@@ -9,7 +9,6 @@ import Foundation
 
 protocol AdapterProtocol {
     func getRandomPhoto(complition: @escaping(Result<PhotoModel, Error>) -> Void)
-    func getPhoto(withId id: String, complition: @escaping(Result<PhotoModel, Error>) -> Void)
 }
 
 final class Adapter: AdapterProtocol {
@@ -28,7 +27,8 @@ final class Adapter: AdapterProtocol {
             case .success(let decodedPhoto):
                 guard
                     let photo = decodedPhoto,
-                    let imageURL = URL(string: photo.imageURLs.thumb)
+                    let thumbImageURL = URL(string: photo.imageURLs.thumb),
+                    let regularImageURL = URL(string: photo.imageURLs.regular)
                 else {
                     return
                 }
@@ -39,36 +39,8 @@ final class Adapter: AdapterProtocol {
                     backgroundHEX: photo.backgroundColor,
                     downloads: photo.downloads,
                     location: photo.location.name ?? "unknown",
-                    imageURL: imageURL,
-                    author: photo.author.name
-                )
-                
-                complition(.success(newPhoto))
-            }
-        }
-    }
-    
-    
-    func getPhoto(withId id: String, complition: @escaping(Result<PhotoModel, Error>) -> Void) {
-        dataFetcher?.fetchPhoto(withId: id) { result in
-            switch result {
-            case .failure(let error):
-                complition(.failure(error))
-            case .success(let decodedPhoto):
-                guard
-                    let photo = decodedPhoto,
-                    let imageURL = URL(string: photo.imageURLs.regular)
-                else {
-                    return
-                }
-                
-                let newPhoto = PhotoModel(
-                    id: photo.id,
-                    createAt: photo.createdAt,
-                    backgroundHEX: photo.backgroundColor,
-                    downloads: photo.downloads,
-                    location: photo.location.name ?? "unknown",
-                    imageURL: imageURL,
+                    thumbImageURL: thumbImageURL,
+                    regularImageURL: regularImageURL,
                     author: photo.author.name
                 )
                 
