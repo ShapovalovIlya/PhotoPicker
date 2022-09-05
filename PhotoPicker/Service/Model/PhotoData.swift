@@ -11,8 +11,8 @@ struct PhotoData: Decodable {
     let id: String
     let createdAt: String
     let backgroundColor: String
-    let downloads: Int
-    let location: Location
+    let downloads: Int?
+    let location: Location?
     let imageURLs: imageURL
     let author: Author
     

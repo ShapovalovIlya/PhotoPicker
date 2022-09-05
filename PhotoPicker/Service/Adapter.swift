@@ -41,8 +41,8 @@ final class Adapter: AdapterProtocol {
                         id: photo.id,
                         createAt: photo.createdAt,
                         backgroundHEX: photo.backgroundColor,
-                        downloads: photo.downloads,
-                        location: photo.location.name ?? "unknown",
+                        downloads: photo.downloads ?? 0,
+                        location: photo.location?.name ?? "unknown",
                         thumbImageURL: thumbImageURL,
                         regularImageURL: regularImageURL,
                         author: photo.author.name

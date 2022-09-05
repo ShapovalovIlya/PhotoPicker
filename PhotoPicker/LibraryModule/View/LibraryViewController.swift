@@ -54,11 +54,13 @@ extension LibraryViewController: UISearchBarDelegate {
 extension LibraryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        return presenter.getNumberOfItems() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
+        let imageURL = presenter.getItemImageURL(byIndex: indexPath.item)
+        print(imageURL)
         cell.backgroundColor = .systemGreen
         let image = UIImage(systemName: "keyboard")
         let imageView = UIImageView(image: image)
@@ -80,7 +82,9 @@ extension LibraryViewController: UICollectionViewDelegate {
 
 //MARK: - Library View Delegate
 extension LibraryViewController: LibraryViewDelegate {
-    
+    func success() {
+        collectionView.reloadData()
+    }
 }
 
 private extension LibraryViewController {

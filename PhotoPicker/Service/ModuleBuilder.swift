@@ -17,7 +17,9 @@ protocol ModuleBuilderInterface {
 final class ModuleBuilder: ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController {
         let view = LibraryViewController()
-        let presenter = LibraryPresenter(view: view, router: router)
+        let adapter = Adapter()
+        let model = ModelController(adapter: adapter)
+        let presenter = LibraryPresenter(view: view, router: router, model: model)
         view.presenter = presenter
         return view
     }
@@ -35,6 +37,8 @@ final class ModuleBuilder: ModuleBuilderInterface {
         view.presenter = presenter
         return view
     }
+    
+    
     
     func makeAlertMessage(ofType type: AlertType) -> UIAlertController {
         let alertController = UIAlertController(

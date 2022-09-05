@@ -9,12 +9,13 @@ import Foundation
 
 protocol LibraryModelInterface {
     func getPhotoLibraryCount() -> Int?
-    func getLibraryPhotoURL(fromIndex index: Int) -> URL?
+    func getLibraryPhotoURL(byIndex index: Int) -> URL?
+    func downloadPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void)
 }
 
 protocol FavoriteModelInterface {
     func getFavoritePhotoCount() -> Int?
-    func getFavoritePhotoURL(fromIndex index: Int) -> URL?
+    func getFavoritePhotoURL(byIndex index: Int) -> URL?
 }
 
 typealias ModelControllerProtocol = LibraryModelInterface & FavoriteModelInterface
@@ -22,8 +23,8 @@ typealias ModelControllerProtocol = LibraryModelInterface & FavoriteModelInterfa
 final class ModelController: ModelControllerProtocol {
     
     var adapter: AdapterProtocol?
-    private var photoLibrary = [PhotoModel]()
     
+    private var photoLibrary = [PhotoModel]()
     private var favoritePhotos: [PhotoModel] {
         var favorite = [PhotoModel]()
         
@@ -36,9 +37,21 @@ final class ModelController: ModelControllerProtocol {
         return favorite
     }
     
-    init(adapter: AdapterProtocol = Adapter()) {
+    init(adapter: AdapterProtocol) {
         self.adapter = adapter
-        downloadPhotos()
+    }
+    
+    func downloadPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void) {
+        adapter?.getPhotos{ result in
+            switch result {
+            case .failure(let error):
+                complition(.failure(error))
+            case .success(let photoArray):
+                self.photoLibrary = photoArray
+                complition(.success("Success!"))
+            }
+        }
+        
     }
     
     //MARK: - Library module data
@@ -46,7 +59,7 @@ final class ModelController: ModelControllerProtocol {
         return photoLibrary.count
     }
     
-    func getLibraryPhotoURL(fromIndex index: Int) -> URL? {
+    func getLibraryPhotoURL(byIndex index: Int) -> URL? {
         return photoLibrary[index].thumbImageURL
     }
     
@@ -55,7 +68,7 @@ final class ModelController: ModelControllerProtocol {
         return favoritePhotos.count
     }
     
-    func getFavoritePhotoURL(fromIndex index: Int) -> URL? {
+    func getFavoritePhotoURL(byIndex index: Int) -> URL? {
         return favoritePhotos[index].thumbImageURL
     }
     
@@ -65,18 +78,5 @@ final class ModelController: ModelControllerProtocol {
 }
 
 private extension ModelController {
-    
-    func downloadPhotos() {
-        
-        adapter?.getPhotos{ result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let photoArray):
-                self.photoLibrary = photoArray
-            }
-        }
-        
-    }
         
 }
