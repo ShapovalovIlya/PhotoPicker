@@ -11,7 +11,7 @@ protocol ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController
     func makeDetailViewController(router: DetailRouter) -> UIViewController
     func makeFavoriteViewController(router: FavoriteRouter) -> UITableViewController
-    func makeAlertMessage(ofType type: AlertType) -> UIAlertController
+    func makeAlertMessage(ofType type: AlertType, withMessage message: String?) -> UIAlertController
 }
 
 final class ModuleBuilder: ModuleBuilderInterface {
@@ -40,27 +40,46 @@ final class ModuleBuilder: ModuleBuilderInterface {
     
     
     
-    func makeAlertMessage(ofType type: AlertType) -> UIAlertController {
-        let alertController = UIAlertController(
-            title: nil,
-            message: type.message,
-            preferredStyle: .alert
-        )
-        
+    func makeAlertMessage(ofType type: AlertType, withMessage message: String?) -> UIAlertController {
+        var alertController: UIAlertController
+        switch type {
+        case .add:
+            alertController = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
+        case .delete:
+            alertController = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
+        case .error:
+            alertController = UIAlertController(title: type.title, message: message, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Cancel", style: .cancel)
+            alertController.addAction(alertAction)
+        }
         return alertController
     }
 }
 
 enum AlertType {
-    case Add
-    case Delete
+    case add
+    case delete
+    case error
     
-    var message: String {
+    var title: String? {
         switch self {
-        case .Add:
+        case .add:
+            return nil
+        case .delete:
+            return nil
+        case .error:
+            return "Error!"
+        }
+    }
+    
+    var message: String? {
+        switch self {
+        case .add:
             return "Added to favorite!"
-        case .Delete:
+        case .delete:
             return "Removed from favorite!"
+        case .error:
+            return nil
         }
     }
     

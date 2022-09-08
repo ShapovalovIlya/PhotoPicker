@@ -14,7 +14,7 @@ protocol RouterMain {
 
 protocol LibraryRouter {
     func showDetailViewController()
-    func showErrorAlert()
+    func showErrorAlert(ofType type: AlertType, withMessage message: String?)
 }
 
 protocol DetailRouter {
@@ -23,7 +23,7 @@ protocol DetailRouter {
 
 protocol FavoriteRouter {
     func showDetailViewController()
-    func showErrorAlert()
+    
 }
 
 typealias RouterProtocol = RouterMain & LibraryRouter & DetailRouter & FavoriteRouter
@@ -73,7 +73,7 @@ final class Router: RouterProtocol {
     func showAlertMessage(ofType type: AlertType) {
         guard
             let navigationController = navigationController,
-            let alertViewController = moduleBuilder?.makeAlertMessage(ofType: type)
+            let alertViewController = moduleBuilder?.makeAlertMessage(ofType: type, withMessage: nil)
         else {
             return
         }
@@ -83,8 +83,14 @@ final class Router: RouterProtocol {
             }
         }
     
-    func showErrorAlert() {
-        
+    func showErrorAlert(ofType type: AlertType, withMessage message: String?) {
+        guard
+            let navigationController = navigationController,
+            let errorViewController = moduleBuilder?.makeAlertMessage(ofType: type, withMessage: message)
+        else {
+            return
+        }
+        navigationController.present(errorViewController, animated: true)
     }
     
 }

@@ -29,11 +29,11 @@ final class DetailPresenter: DetailPresenterProtocol {
     }
     
     func addPhotoToFavorite() {
-        router?.showAlertMessage(ofType: .Add)
+        router?.showAlertMessage(ofType: .add)
     }
     
     func removePhotoFromFavorite() {
-        router?.showAlertMessage(ofType: .Delete)
+        router?.showAlertMessage(ofType: .delete)
     }
     
     

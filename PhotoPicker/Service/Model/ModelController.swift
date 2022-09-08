@@ -26,15 +26,7 @@ final class ModelController: ModelControllerProtocol {
     
     private var photoLibrary = [PhotoModel]()
     private var favoritePhotos: [PhotoModel] {
-        var favorite = [PhotoModel]()
-        
-        for photo in photoLibrary {
-            if photo.isFavorite {
-                favorite.append(photo)
-            }
-        }
-        
-        return favorite
+        return photoLibrary.filter { $0.isFavorite == true }
     }
     
     init(adapter: AdapterProtocol) {

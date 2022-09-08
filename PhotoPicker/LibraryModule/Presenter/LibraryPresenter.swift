@@ -28,14 +28,16 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         self.view = view
         self.router = router
         self.model = model
+        
         model.downloadPhotoLibrary { result in
             switch result {
             case .success(_):
                 view.success()
             case .failure(let error):
-                print(error)
+                router.showErrorAlert(ofType: .error, withMessage: error.localizedDescription)
             }
         }
+        
     }
     
     func getNumberOfItems() -> Int? {
