@@ -8,22 +8,30 @@
 import Foundation
 
 protocol DataFetcherServiceProtocol {
-    func fetchPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
+    func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
 }
 
 final class DataFetcherService: DataFetcherServiceProtocol {
     
-    private let dataFetcher: DataManager?
-    private let baseURL = "https://api.unsplash.com/"
-    private let API = APIKeys()
+    private let dataManager: DataManager?
     
     init(dataFetcher: DataManager = NetworkDataManager()) {
-        self.dataFetcher = dataFetcher
+        self.dataManager = dataFetcher
     }
     
-    func fetchPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
-        let fullURL = "\(baseURL)/photos?client_id=\(API.accessKey)"
-        dataFetcher?.fetchGnericJSONData(urlString: fullURL, response: complition)
+    func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
+        let fullURL = "\(APIKeys().baseURL)/photos\(APIKeys().accessKey)"
+        dataManager?.fetchGnericJSONData(urlString: fullURL, response: complition)
+    }
+    
+    func fetchPhoto(withId id: String, complition: @escaping(Result<PhotoData?, Error>) -> Void) {
+        let fullURL = "\(APIKeys().baseURL)/photos/\(id)\(APIKeys().accessKey)"
+        dataManager?.fetchGnericJSONData(urlString: fullURL, response: complition)
+    }
+    
+    func searchPhoto(withQuery query: String, complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
+        let fullURL = "\(APIKeys().baseURL)/search/photos?page=1&query=\(query)\(APIKeys().accessKey)"
+        dataManager?.fetchGnericJSONData(urlString: fullURL, response: complition)
     }
     
 }
