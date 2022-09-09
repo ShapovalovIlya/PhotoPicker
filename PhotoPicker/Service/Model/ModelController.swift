@@ -55,6 +55,10 @@ final class ModelController: ModelControllerProtocol {
         return photoLibrary[index].thumbImageURL
     }
     
+    func getPhotoId(from index: Int, complition: @escaping(Result<PhotoModel, Error>) -> Void) {
+        let photoId = photoLibrary[index].id
+    }
+    
     //MARK: - Favorite module data
     func getFavoritePhotoCount() -> Int? {
         return favoritePhotos.count

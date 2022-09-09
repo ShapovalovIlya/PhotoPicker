@@ -8,22 +8,24 @@
 import Foundation
 
 protocol DataFetcherServiceProtocol {
-    func fetchPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
+    func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
 }
 
 final class DataFetcherService: DataFetcherServiceProtocol {
     
     private let dataFetcher: DataManager?
-    private let baseURL = "https://api.unsplash.com/"
-    private let API = APIKeys()
     
     init(dataFetcher: DataManager = NetworkDataManager()) {
         self.dataFetcher = dataFetcher
     }
     
-    func fetchPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
-        let fullURL = "\(baseURL)/photos?client_id=\(API.accessKey)"
+    func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
+        let fullURL = "\(APIKeys().baseURL)/photos\(APIKeys().accessKey)"
         dataFetcher?.fetchGnericJSONData(urlString: fullURL, response: complition)
+    }
+    
+    func fetchPhoto(withId id: String, complition: @escaping(Result<PhotoData?, Error>) -> Void) {
+        let fullURL = "\(APIKeys().baseURL)/photos/\(id)\(APIKeys().accessKey)"
     }
     
 }

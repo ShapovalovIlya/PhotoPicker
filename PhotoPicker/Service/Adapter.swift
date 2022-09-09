@@ -20,7 +20,7 @@ final class Adapter: AdapterProtocol {
     }
     
     func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
-        dataFetcher?.fetchPhotos { result in
+        dataFetcher?.fetchListOfPhotos { result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
