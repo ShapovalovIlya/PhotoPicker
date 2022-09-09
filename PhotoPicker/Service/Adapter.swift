@@ -9,6 +9,8 @@ import Foundation
 
 protocol AdapterProtocol {
     func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void)
+    func getDetailPhoto(withId id: String, complition: @escaping(Result<PhotoModel,Error>) -> Void)
+    func getSearchResult(withQuery query: String, complition: @escaping(Result<[PhotoModel], Error>) -> Void)
 }
 
 final class Adapter: AdapterProtocol {
@@ -20,12 +22,17 @@ final class Adapter: AdapterProtocol {
     }
     
     func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
-        dataFetcher?.fetchListOfPhotos { result in
+        dataFetcher?.fetchListOfPhotos { [weak self] result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
             case .success(let decodedPhotos):
-                guard let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos) else { return }
+                guard
+                    let self = self,
+                    let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
+                else {
+                    return print("Adapter error: fail conversion data to model!")
+                }
                 complition(.success(photosArray))
             }
             
@@ -34,7 +41,47 @@ final class Adapter: AdapterProtocol {
     
     
     func getDetailPhoto(withId id: String, complition: @escaping(Result<PhotoModel,Error>) -> Void) {
-        
+        dataFetcher?.fetchPhoto(withId: id) { result in
+            switch result {
+            case .failure(let error):
+                complition(.failure(error))
+            case .success(let decodedPhoto):
+                guard
+                    let photo = decodedPhoto,
+                    let imageURL = URL(string: photo.imageURLs.regular)
+                else {
+                    return print("Adapter error: fail conversion data to model!")
+                }
+                
+                let newPhoto = PhotoModel(
+                    id: photo.id,
+                    createAt: photo.createdAt,
+                    backgroundHEX: photo.backgroundColor,
+                    downloads: photo.downloads ?? 0,
+                    location: photo.location?.name ?? "Unknown",
+                    imageURL: imageURL,
+                    author: photo.author.name)
+                
+                complition(.success(newPhoto))
+            }
+        }
+    }
+    
+    func getSearchResult(withQuery query: String, complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
+        dataFetcher?.fetchPhoto(withQuery: query) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                complition(.failure(error))
+            case .success(let decodedPhotos):
+                guard
+                    let self = self,
+                    let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
+                else {
+                    return print("Adapter error: fail conversion data to model!")
+                }
+                complition(.success(photosArray))
+            }
+        }
     }
     
 }
@@ -47,12 +94,7 @@ private extension Adapter {
         
         for photo in photos {
             
-            guard
-                let thumbImageURL = URL(string: photo.imageURLs.thumb),
-                let regularImageURL = URL(string: photo.imageURLs.regular)
-            else {
-                continue
-            }
+            guard let imageURL = URL(string: photo.imageURLs.thumb) else { continue }
             
             let newPhoto = PhotoModel(
                 id: photo.id,
@@ -60,8 +102,7 @@ private extension Adapter {
                 backgroundHEX: photo.backgroundColor,
                 downloads: photo.downloads ?? 0,
                 location: photo.location?.name ?? "unknown",
-                thumbImageURL: thumbImageURL,
-                regularImageURL: regularImageURL,
+                imageURL: imageURL,
                 author: photo.author.name
             )
             photosArray.append(newPhoto)

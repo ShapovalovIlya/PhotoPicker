@@ -13,19 +13,17 @@ struct PhotoModel {
     let backgroundHEX: String
     let downloads: Int
     let location: String
-    let thumbImageURL: URL
-    let regularImageURL: URL
+    let imageURL: URL
     let author: String
     let isFavorite: Bool = false
     
-    init(id: String, createAt: String, backgroundHEX: String, downloads: Int, location: String, thumbImageURL: URL, regularImageURL: URL, author: String) {
+    init(id: String, createAt: String, backgroundHEX: String, downloads: Int, location: String, imageURL: URL, author: String) {
         self.id = id
         self.createAt = createAt
         self.backgroundHEX = backgroundHEX
         self.downloads = downloads
         self.location = location
-        self.thumbImageURL = thumbImageURL
-        self.regularImageURL = regularImageURL
+        self.imageURL = imageURL
         self.author = author
     }
 }
