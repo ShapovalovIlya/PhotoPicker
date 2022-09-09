@@ -52,7 +52,7 @@ final class ModelController: ModelControllerProtocol {
     }
     
     func getThumpPhotoURL(byIndex index: Int) -> URL? {
-        return photoLibrary[index].thumbImageURL
+        return photoLibrary[index].imageURL
     }
     
     func getPhotoId(from index: Int, complition: @escaping(Result<PhotoModel, Error>) -> Void) {
@@ -65,7 +65,7 @@ final class ModelController: ModelControllerProtocol {
     }
     
     func getFavoritePhotoURL(byIndex index: Int) -> URL? {
-        return favoritePhotos[index].thumbImageURL
+        return favoritePhotos[index].imageURL
     }
     
     //MARK: - Detail module data
