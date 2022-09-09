@@ -9,7 +9,7 @@ import Foundation
 
 protocol LibraryModelInterface {
     func getPhotoLibraryCount() -> Int?
-    func getLibraryPhotoURL(byIndex index: Int) -> URL?
+    func getThumpPhotoURL(byIndex index: Int) -> URL?
     func downloadPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void)
 }
 
@@ -40,7 +40,7 @@ final class ModelController: ModelControllerProtocol {
                 complition(.failure(error))
             case .success(let photoArray):
                 self.photoLibrary = photoArray
-                complition(.success("Success!"))
+                complition(.success("Successfuly get photos!"))
             }
         }
         
@@ -51,7 +51,7 @@ final class ModelController: ModelControllerProtocol {
         return photoLibrary.count
     }
     
-    func getLibraryPhotoURL(byIndex index: Int) -> URL? {
+    func getThumpPhotoURL(byIndex index: Int) -> URL? {
         return photoLibrary[index].thumbImageURL
     }
     

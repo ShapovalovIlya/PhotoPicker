@@ -11,7 +11,7 @@ protocol ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController
     func makeDetailViewController(router: DetailRouter) -> UIViewController
     func makeFavoriteViewController(router: FavoriteRouter) -> UITableViewController
-    func makeAlertMessage(ofType type: AlertType, withMessage message: String?) -> UIAlertController
+    func makePopupMessage(ofType type: PopupType, withMessage message: String?) -> UIAlertController
 }
 
 final class ModuleBuilder: ModuleBuilderInterface {
@@ -21,6 +21,7 @@ final class ModuleBuilder: ModuleBuilderInterface {
         let model = ModelController(adapter: adapter)
         let presenter = LibraryPresenter(view: view, router: router, model: model)
         view.presenter = presenter
+        view.title = "Photo Library"
         return view
     }
     
@@ -28,6 +29,7 @@ final class ModuleBuilder: ModuleBuilderInterface {
         let view = DetailViewController()
         let presenter = DetailPresenter(view: view, router: router)
         view.presenter = presenter
+        view.title = "Favorite photos"
         return view
     }
     
@@ -35,12 +37,13 @@ final class ModuleBuilder: ModuleBuilderInterface {
         let view = FavoriteViewController()
         let presenter = FavoritePresenter(view: view, router: router)
         view.presenter = presenter
+        view.title = "Favorite photos"
         return view
     }
     
     
     
-    func makeAlertMessage(ofType type: AlertType, withMessage message: String?) -> UIAlertController {
+    func makePopupMessage(ofType type: PopupType, withMessage message: String?) -> UIAlertController {
         var alertController: UIAlertController
         switch type {
         case .add:
@@ -56,7 +59,7 @@ final class ModuleBuilder: ModuleBuilderInterface {
     }
 }
 
-enum AlertType {
+enum PopupType {
     case add
     case delete
     case error

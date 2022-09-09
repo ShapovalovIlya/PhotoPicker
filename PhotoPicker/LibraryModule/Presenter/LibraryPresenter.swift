@@ -31,10 +31,11 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         
         model.downloadPhotoLibrary { result in
             switch result {
-            case .success(_):
+            case .success(let message):
                 view.success()
+                print(message)
             case .failure(let error):
-                router.showErrorAlert(ofType: .error, withMessage: error.localizedDescription)
+                router.showPopupMessage(ofType: .error, withMessage: error.localizedDescription)
             }
         }
         
@@ -45,7 +46,7 @@ final class LibraryPresenter: LibraryPresenterProtocol {
     }
     
     func getItemImageURL(byIndex index: Int) -> URL? {
-        return model?.getLibraryPhotoURL(byIndex: index)
+        return model?.getThumpPhotoURL(byIndex: index)
     }
     
     func pushDetailView() {

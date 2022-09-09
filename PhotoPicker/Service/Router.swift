@@ -14,11 +14,11 @@ protocol RouterMain {
 
 protocol LibraryRouter {
     func showDetailViewController()
-    func showErrorAlert(ofType type: AlertType, withMessage message: String?)
+    func showPopupMessage(ofType type: PopupType, withMessage message: String?)
 }
 
 protocol DetailRouter {
-    func showAlertMessage(ofType type: AlertType)
+    func showPopupMessage(ofType type: PopupType, withMessage message: String?)
 }
 
 protocol FavoriteRouter {
@@ -70,27 +70,21 @@ final class Router: RouterProtocol {
         navigationController.pushViewController(detailViewController, animated: true)
     }
     
-    func showAlertMessage(ofType type: AlertType) {
+    func showPopupMessage(ofType type: PopupType, withMessage message: String?) {
         guard
             let navigationController = navigationController,
-            let alertViewController = moduleBuilder?.makeAlertMessage(ofType: type, withMessage: nil)
+            let alertViewController = moduleBuilder?.makePopupMessage(ofType: type, withMessage: message)
         else {
             return
         }
         navigationController.present(alertViewController, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        
+        if type != PopupType.error {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 alertViewController.dismiss(animated: true)
             }
         }
-    
-    func showErrorAlert(ofType type: AlertType, withMessage message: String?) {
-        guard
-            let navigationController = navigationController,
-            let errorViewController = moduleBuilder?.makeAlertMessage(ofType: type, withMessage: message)
-        else {
-            return
-        }
-        navigationController.present(errorViewController, animated: true)
+        
     }
     
 }

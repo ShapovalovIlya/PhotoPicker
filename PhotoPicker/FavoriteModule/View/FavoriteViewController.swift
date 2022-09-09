@@ -13,7 +13,7 @@ class FavoriteViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Favorite photos"
+        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
     }
 

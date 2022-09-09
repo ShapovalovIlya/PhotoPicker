@@ -60,14 +60,7 @@ extension LibraryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
-        cell.backgroundColor = .lightGray
-        cell.layer.cornerRadius = 10
-        let imageView = UIImageView()
-        let imageURL = presenter?.getItemImageURL(byIndex: indexPath.item)
-        let placeHolder = UIImage(systemName: "square.and.arrow.down")
-        imageView.kf.setImage(with: imageURL, placeholder: placeHolder)
-        imageView.contentMode = .scaleAspectFit
-        cell.backgroundView = imageView
+        setupCell(cell, withIndex: indexPath.item)
         return cell
     }
     
@@ -93,7 +86,6 @@ private extension LibraryViewController {
     //MARK: - Setup view
     func setupView() {
         view.backgroundColor = .white
-        self.title = "Photo Library"
         view.addSubview(collectionView)
     }
     
@@ -103,6 +95,17 @@ private extension LibraryViewController {
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .clear
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionViewCell")
+    }
+    
+    func setupCell(_ cell: UICollectionViewCell, withIndex index: Int) {
+        cell.backgroundColor = .black
+        cell.layer.cornerRadius = 10
+        let imageView = UIImageView()
+        let imageURL = presenter?.getItemImageURL(byIndex: index)
+        let placeHolder = UIImage(systemName: "square.and.arrow.down")
+        imageView.kf.setImage(with: imageURL, placeholder: placeHolder)
+        imageView.contentMode = .scaleAspectFit
+        cell.backgroundView = imageView
     }
     
     //MARK: - Setup navigation bar
