@@ -29,7 +29,6 @@ final class ModuleBuilder: ModuleBuilderInterface {
         let view = DetailViewController()
         let presenter = DetailPresenter(view: view, router: router)
         view.presenter = presenter
-        view.title = "Favorite photos"
         return view
     }
     
