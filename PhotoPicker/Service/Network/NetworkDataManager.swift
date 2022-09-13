@@ -12,16 +12,16 @@ protocol DataManager {
     func sendJSONData(urlString: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void)
 }
 
-class NetworkDataManager: DataManager {
+final class NetworkDataManager: DataManager {
     
-    var networking: Networking!
+    private let networking: Networking?
     
     init(networking: Networking = NetworkService()) {
         self.networking = networking
     }
     
     func fetchGnericJSONData<T: Decodable>(urlString: String, response: @escaping(Result<T?, Error>) -> Void) {
-        networking.GETrequest(urlString: urlString) { result in
+        networking?.GETrequest(urlString: urlString) { result in
             switch result {
             case .failure(let error):
                 print("Error received requesting Data: \(error.localizedDescription)")
@@ -35,7 +35,7 @@ class NetworkDataManager: DataManager {
     
     func sendJSONData(urlString: String, data: [String: [String]], response: @escaping(Result<Bool, Error>) -> Void) {
         guard let encodedData = encodeJSON(from: data) else { return }
-        networking.PUTRequest(urlString: urlString, data: encodedData) { result in
+        networking?.PUTRequest(urlString: urlString, data: encodedData) { result in
             switch result {
             case .failure(let error):
                 response(.failure(error))

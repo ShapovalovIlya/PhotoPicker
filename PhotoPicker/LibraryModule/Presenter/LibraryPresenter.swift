@@ -15,7 +15,7 @@ protocol LibraryPresenterProtocol {
     init(view: LibraryViewDelegate, router: LibraryRouter, model: LibraryModelInterface)
     func pushDetailView()
     func getNumberOfItems() -> Int?
-    func getItemImageURL(byIndex index: Int) -> URL?
+    func getModelForItem(withIndex index: Int) -> PhotoModel?
 }
 
 final class LibraryPresenter: LibraryPresenterProtocol {
@@ -45,11 +45,16 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         return model?.getPhotoLibraryCount()
     }
     
-    func getItemImageURL(byIndex index: Int) -> URL? {
-        return model?.getThumpPhotoURL(byIndex: index)
+    func getModelForItem(withIndex index: Int) -> PhotoModel? {
+        return model?.getPhotoModel(withIndex: index)
     }
     
     func pushDetailView() {
-        router?.showDetailViewController()
+        
     }
+    
+    func getPhotoDetail(withIndex index: Int) {
+        
+    }
+    
 }

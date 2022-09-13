@@ -9,6 +9,8 @@ import Foundation
 
 protocol AdapterProtocol {
     func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void)
+    func getDetailPhoto(withId id: String, complition: @escaping(Result<PhotoModel,Error>) -> Void)
+    func getSearchResult(withQuery query: String, complition: @escaping(Result<[PhotoModel], Error>) -> Void)
 }
 
 final class Adapter: AdapterProtocol {
@@ -20,38 +22,91 @@ final class Adapter: AdapterProtocol {
     }
     
     func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
-        dataFetcher?.fetchListOfPhotos { result in
+        dataFetcher?.fetchListOfPhotos { [weak self] result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
             case .success(let decodedPhotos):
-                var photosArray = [PhotoModel]()
-                guard let photos = decodedPhotos else { return }
+                guard
+                    let self = self,
+                    let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
+                else {
+                    return print("Adapter error: fail conversion data to model!")
+                }
+                complition(.success(photosArray))
+            }
+            
+        }
+    }
+    
+    
+    func getDetailPhoto(withId id: String, complition: @escaping(Result<PhotoModel,Error>) -> Void) {
+        dataFetcher?.fetchPhoto(withId: id) { result in
+            switch result {
+            case .failure(let error):
+                complition(.failure(error))
+            case .success(let decodedPhoto):
+                guard
+                    let photo = decodedPhoto,
+                    let imageURL = URL(string: photo.imageURLs.regular)
+                else {
+                    return print("Adapter error: fail conversion data to model!")
+                }
                 
-                for photo in photos {
-                    
-                    guard
-                        let thumbImageURL = URL(string: photo.imageURLs.thumb),
-                        let regularImageURL = URL(string: photo.imageURLs.regular)
-                    else {
-                        continue
-                    }
-                    
-                    let newPhoto = PhotoModel(
-                        id: photo.id,
-                        createAt: photo.createdAt,
-                        backgroundHEX: photo.backgroundColor,
-                        downloads: photo.downloads ?? 0,
-                        location: photo.location?.name ?? "unknown",
-                        thumbImageURL: thumbImageURL,
-                        regularImageURL: regularImageURL,
-                        author: photo.author.name
-                    )
-                    photosArray.append(newPhoto)
+                let newPhoto = PhotoModel(
+                    id: photo.id,
+                    createAt: photo.createdAt,
+                    backgroundHEX: photo.backgroundColor,
+                    downloads: photo.downloads ?? 0,
+                    location: photo.location?.name ?? "Unknown",
+                    imageURL: imageURL,
+                    author: photo.author.name)
+                
+                complition(.success(newPhoto))
+            }
+        }
+    }
+    
+    func getSearchResult(withQuery query: String, complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
+        dataFetcher?.fetchPhoto(withQuery: query) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                complition(.failure(error))
+            case .success(let decodedPhotos):
+                guard
+                    let self = self,
+                    let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
+                else {
+                    return print("Adapter error: fail conversion data to model!")
                 }
                 complition(.success(photosArray))
             }
         }
     }
     
+}
+
+private extension Adapter {
+    
+    func photoDataConverter(decodedPhotos: [PhotoData]?) -> [PhotoModel]? {
+        var photosArray = [PhotoModel]()
+        guard let photos = decodedPhotos else { return nil }
+        
+        for photo in photos {
+            
+            guard let imageURL = URL(string: photo.imageURLs.thumb) else { continue }
+            
+            let newPhoto = PhotoModel(
+                id: photo.id,
+                createAt: photo.createdAt,
+                backgroundHEX: photo.backgroundColor,
+                downloads: photo.downloads ?? 0,
+                location: photo.location?.name ?? "unknown",
+                imageURL: imageURL,
+                author: photo.author.name
+            )
+            photosArray.append(newPhoto)
+        }
+        return photosArray
+    }
 }

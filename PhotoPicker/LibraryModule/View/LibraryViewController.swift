@@ -100,8 +100,9 @@ private extension LibraryViewController {
     func setupCell(_ cell: UICollectionViewCell, withIndex index: Int) {
         cell.backgroundColor = .black
         cell.layer.cornerRadius = 10
+        let photoModel = presenter?.getModelForItem(withIndex: index)
         let imageView = UIImageView()
-        let imageURL = presenter?.getItemImageURL(byIndex: index)
+        let imageURL = photoModel?.imageURL
         let placeHolder = UIImage(systemName: "square.and.arrow.down")
         imageView.kf.setImage(with: imageURL, placeholder: placeHolder)
         imageView.contentMode = .scaleAspectFit

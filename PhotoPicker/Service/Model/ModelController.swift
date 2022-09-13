@@ -9,13 +9,13 @@ import Foundation
 
 protocol LibraryModelInterface {
     func getPhotoLibraryCount() -> Int?
-    func getThumpPhotoURL(byIndex index: Int) -> URL?
+    func getPhotoModel(withIndex index: Int) -> PhotoModel?
     func downloadPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void)
 }
 
 protocol FavoriteModelInterface {
     func getFavoritePhotoCount() -> Int?
-    func getFavoritePhotoURL(byIndex index: Int) -> URL?
+    func getFavoritePhotoModel(withIndex index: Int) -> PhotoModel?
 }
 
 typealias ModelControllerProtocol = LibraryModelInterface & FavoriteModelInterface
@@ -51,12 +51,12 @@ final class ModelController: ModelControllerProtocol {
         return photoLibrary.count
     }
     
-    func getThumpPhotoURL(byIndex index: Int) -> URL? {
-        return photoLibrary[index].thumbImageURL
+    func getPhotoModel(withIndex index: Int) -> PhotoModel? {
+        return photoLibrary[index]
     }
     
-    func getPhotoId(from index: Int, complition: @escaping(Result<PhotoModel, Error>) -> Void) {
-        let photoId = photoLibrary[index].id
+    func getPhotoId(from index: Int) {
+        
     }
     
     //MARK: - Favorite module data
@@ -64,8 +64,8 @@ final class ModelController: ModelControllerProtocol {
         return favoritePhotos.count
     }
     
-    func getFavoritePhotoURL(byIndex index: Int) -> URL? {
-        return favoritePhotos[index].thumbImageURL
+    func getFavoritePhotoModel(withIndex index: Int) -> PhotoModel? {
+        return favoritePhotos[index]
     }
     
     //MARK: - Detail module data

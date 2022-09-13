@@ -9,6 +9,8 @@ import Foundation
 
 protocol DataFetcherServiceProtocol {
     func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
+    func fetchPhoto(withId id: String, complition: @escaping(Result<PhotoData?, Error>) -> Void)
+    func fetchPhoto(withQuery query: String, complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
 }
 
 final class DataFetcherService: DataFetcherServiceProtocol {
@@ -29,7 +31,7 @@ final class DataFetcherService: DataFetcherServiceProtocol {
         dataManager?.fetchGnericJSONData(urlString: fullURL, response: complition)
     }
     
-    func searchPhoto(withQuery query: String, complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {
+    func fetchPhoto(withQuery query: String, complition: @escaping((Result<[PhotoData]?, Error>) -> Void)) {
         let fullURL = "\(APIKeys().baseURL)/search/photos?page=1&query=\(query)\(APIKeys().accessKey)"
         dataManager?.fetchGnericJSONData(urlString: fullURL, response: complition)
     }

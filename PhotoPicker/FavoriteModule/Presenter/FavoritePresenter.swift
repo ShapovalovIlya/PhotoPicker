@@ -27,7 +27,7 @@ final class FavoritePresenter: FavoritePresenterProtocol {
     }
     
     func pushDetailView() {
-        router?.showDetailViewController()
+        
     }
     
 }

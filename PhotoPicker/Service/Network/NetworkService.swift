@@ -12,7 +12,7 @@ protocol Networking {
     func PUTRequest(urlString: String, data: Data, complition: @escaping(Result<Bool, Error>) -> Void)
 }
 
-class NetworkService: Networking {
+final class NetworkService: Networking {
     
     func GETrequest(urlString: String, completion: @escaping (Result<Data?, Error>) -> Void) {
         guard let url = URL(string: urlString) else { return }
@@ -49,7 +49,7 @@ class NetworkService: Networking {
             DispatchQueue.main.async {
                 
                 if let error = error {
-                    print("Error making PUT requrst: \(error.localizedDescription)")
+                    print("Network service error. PUT requrst failure: \(error.localizedDescription)")
                     complition(.failure(error))
                 }
                 
