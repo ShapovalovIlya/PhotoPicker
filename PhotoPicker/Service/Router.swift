@@ -13,7 +13,7 @@ protocol RouterMain {
 }
 
 protocol LibraryRouter {
-    func showDetailViewController()
+    func showDetailViewController(id: String)
     func showPopupMessage(ofType type: PopupType, withMessage message: String?)
 }
 
@@ -22,7 +22,7 @@ protocol DetailRouter {
 }
 
 protocol FavoriteRouter {
-    func showDetailViewController()
+    func showDetailViewController(id: String)
     
 }
 
@@ -60,7 +60,7 @@ final class Router: RouterProtocol {
         navigationController.tabBarItem = TabBarItems.favorite.item
     }
     
-    func showDetailViewController() {
+    func showDetailViewController(id: String) {
         guard
             let navigationController = navigationController,
             let detailViewController = moduleBuilder?.makeDetailViewController(router: self)

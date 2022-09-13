@@ -50,6 +50,11 @@ final class LibraryPresenter: LibraryPresenterProtocol {
     }
     
     func pushDetailView() {
-        router?.showDetailViewController()
+        
     }
+    
+    func getPhotoDetail(withIndex index: Int) {
+        
+    }
+    
 }

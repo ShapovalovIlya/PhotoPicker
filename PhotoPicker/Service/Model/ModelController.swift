@@ -55,8 +55,8 @@ final class ModelController: ModelControllerProtocol {
         return photoLibrary[index].imageURL
     }
     
-    func getPhotoId(from index: Int, complition: @escaping(Result<PhotoModel, Error>) -> Void) {
-        let photoId = photoLibrary[index].id
+    func getPhotoId(from index: Int) {
+        
     }
     
     //MARK: - Favorite module data
