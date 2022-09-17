@@ -25,7 +25,8 @@ final class Adapter {
                     let self = self,
                     let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
                 else {
-                    return print("Adapter error: fail conversion data to model!")
+                    print("Adapter error: fail conversion data to model!")
+                    return
                 }
                 complition(.success(photosArray))
             }
@@ -44,7 +45,8 @@ final class Adapter {
                     let photo = decodedPhoto,
                     let imageURL = URL(string: photo.imageURLs.regular)
                 else {
-                    return print("Adapter error: fail conversion data to model!")
+                    print("Adapter error: fail conversion data to model!")
+                    return
                 }
                 
                 let newPhoto = PhotoModel(
@@ -71,7 +73,8 @@ final class Adapter {
                     let self = self,
                     let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
                 else {
-                    return print("Adapter error: fail conversion data to model!")
+                    print("Adapter error: fail conversion data to model!")
+                    return
                 }
                 complition(.success(photosArray))
             }

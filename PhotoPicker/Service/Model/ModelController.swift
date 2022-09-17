@@ -19,7 +19,7 @@ protocol FavoriteModelInterface: AnyObject {
 }
 
 protocol DetailModelInterface: AnyObject {
-    
+    func getDetailedPhotoModel(withId id: String, complition: @escaping (Result<PhotoModel, Error>) -> Void)
 }
 
 typealias ModelControllerProtocol = LibraryModelInterface & FavoriteModelInterface & DetailModelInterface
@@ -69,10 +69,8 @@ final class ModelController: ModelControllerProtocol {
     }
     
     //MARK: - Detail module data
-    
-    
-}
-
-private extension ModelController {
-        
+    func getDetailedPhotoModel(withId id: String, complition: @escaping (Result<PhotoModel, Error>) -> Void) {
+        adapter.getDetailPhoto(withId: id, complition: complition)
+    }
+ 
 }
