@@ -7,18 +7,14 @@
 
 import Foundation
 
-protocol DataFetcherServiceProtocol {
-    func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
-    func fetchPhoto(withId id: String, complition: @escaping(Result<PhotoData?, Error>) -> Void)
-    func fetchPhoto(withQuery query: String, complition: @escaping(Result<[PhotoData]?, Error>) -> Void)
-}
-
-final class DataFetcherService: DataFetcherServiceProtocol {
+final class DataFetcherService {
+    
+    static let shared = DataFetcherService()
     
     private let dataManager: DataManager?
     
-    init(dataFetcher: DataManager = NetworkDataManager()) {
-        self.dataManager = dataFetcher
+    private init(dataManager: DataManager = NetworkDataManager()) {
+        self.dataManager = dataManager
     }
     
     func fetchListOfPhotos(_ complition: @escaping(Result<[PhotoData]?, Error>) -> Void) {

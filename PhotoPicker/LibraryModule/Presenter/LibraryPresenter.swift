@@ -11,7 +11,7 @@ protocol LibraryViewDelegate: AnyObject {
     func success()
 }
 
-protocol LibraryPresenterProtocol {
+protocol LibraryPresenterProtocol: AnyObject {
     init(view: LibraryViewDelegate, router: LibraryRouter, model: LibraryModelInterface)
     func pushDetailView()
     func getNumberOfItems() -> Int?
@@ -29,7 +29,7 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         self.router = router
         self.model = model
         
-        model.downloadPhotoLibrary { result in
+        model.getPhotoLibrary { result in
             switch result {
             case .success(let message):
                 view.success()
