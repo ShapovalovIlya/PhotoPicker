@@ -7,34 +7,34 @@
 
 import Foundation
 
-protocol LibraryModelInterface {
+protocol LibraryModelInterface: AnyObject {
     func getPhotoLibraryCount() -> Int?
     func getPhotoModel(withIndex index: Int) -> PhotoModel?
-    func downloadPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void)
+    func getPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void)
 }
 
-protocol FavoriteModelInterface {
+protocol FavoriteModelInterface: AnyObject {
     func getFavoritePhotoCount() -> Int?
     func getFavoritePhotoModel(withIndex index: Int) -> PhotoModel?
 }
 
-typealias ModelControllerProtocol = LibraryModelInterface & FavoriteModelInterface
+protocol DetailModelInterface: AnyObject {
+    func getDetailedPhotoModel(withId id: String, complition: @escaping (Result<PhotoModel, Error>) -> Void)
+}
+
+typealias ModelControllerProtocol = LibraryModelInterface & FavoriteModelInterface & DetailModelInterface
 
 final class ModelController: ModelControllerProtocol {
     
-    var adapter: AdapterProtocol?
-    
+    private lazy var adapter = Adapter.shared
     private var photoLibrary = [PhotoModel]()
     private var favoritePhotos: [PhotoModel] {
         return photoLibrary.filter { $0.isFavorite == true }
     }
     
-    init(adapter: AdapterProtocol) {
-        self.adapter = adapter
-    }
     
-    func downloadPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void) {
-        adapter?.getPhotos{ result in
+    func getPhotoLibrary(_ complition: @escaping(Result<String, Error>) -> Void) {
+        adapter.getPhotos{ result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
@@ -69,10 +69,8 @@ final class ModelController: ModelControllerProtocol {
     }
     
     //MARK: - Detail module data
-    
-    
-}
-
-private extension ModelController {
-        
+    func getDetailedPhotoModel(withId id: String, complition: @escaping (Result<PhotoModel, Error>) -> Void) {
+        adapter.getDetailPhoto(withId: id, complition: complition)
+    }
+ 
 }

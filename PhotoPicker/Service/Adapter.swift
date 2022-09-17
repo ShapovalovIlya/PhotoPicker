@@ -7,22 +7,16 @@
 
 import Foundation
 
-protocol AdapterProtocol {
-    func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void)
-    func getDetailPhoto(withId id: String, complition: @escaping(Result<PhotoModel,Error>) -> Void)
-    func getSearchResult(withQuery query: String, complition: @escaping(Result<[PhotoModel], Error>) -> Void)
-}
-
-final class Adapter: AdapterProtocol {
+final class Adapter {
     
-    private let dataFetcher: DataFetcherServiceProtocol?
+    static let shared = Adapter()
     
-    init(dataFetcher: DataFetcherServiceProtocol = DataFetcherService()) {
-        self.dataFetcher = dataFetcher
-    }
+    private lazy var dataFetcher = DataFetcherService.shared
+    
+    private init() { }
     
     func getPhotos(_ complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
-        dataFetcher?.fetchListOfPhotos { [weak self] result in
+        dataFetcher.fetchListOfPhotos { [weak self] result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
@@ -31,7 +25,8 @@ final class Adapter: AdapterProtocol {
                     let self = self,
                     let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
                 else {
-                    return print("Adapter error: fail conversion data to model!")
+                    print("Adapter error: fail conversion data to model!")
+                    return
                 }
                 complition(.success(photosArray))
             }
@@ -41,7 +36,7 @@ final class Adapter: AdapterProtocol {
     
     
     func getDetailPhoto(withId id: String, complition: @escaping(Result<PhotoModel,Error>) -> Void) {
-        dataFetcher?.fetchPhoto(withId: id) { result in
+        dataFetcher.fetchPhoto(withId: id) { result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
@@ -50,7 +45,8 @@ final class Adapter: AdapterProtocol {
                     let photo = decodedPhoto,
                     let imageURL = URL(string: photo.imageURLs.regular)
                 else {
-                    return print("Adapter error: fail conversion data to model!")
+                    print("Adapter error: fail conversion data to model!")
+                    return
                 }
                 
                 let newPhoto = PhotoModel(
@@ -68,7 +64,7 @@ final class Adapter: AdapterProtocol {
     }
     
     func getSearchResult(withQuery query: String, complition: @escaping(Result<[PhotoModel], Error>) -> Void) {
-        dataFetcher?.fetchPhoto(withQuery: query) { [weak self] result in
+        dataFetcher.fetchPhoto(withQuery: query) { [weak self] result in
             switch result {
             case .failure(let error):
                 complition(.failure(error))
@@ -77,7 +73,8 @@ final class Adapter: AdapterProtocol {
                     let self = self,
                     let photosArray = self.photoDataConverter(decodedPhotos: decodedPhotos)
                 else {
-                    return print("Adapter error: fail conversion data to model!")
+                    print("Adapter error: fail conversion data to model!")
+                    return
                 }
                 complition(.success(photosArray))
             }

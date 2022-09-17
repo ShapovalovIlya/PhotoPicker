@@ -60,7 +60,8 @@ extension LibraryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath)
-        setupCell(cell, withIndex: indexPath.item)
+        let cellIndex = indexPath.item
+        setupCell(cell, withIndex: cellIndex)
         return cell
     }
     

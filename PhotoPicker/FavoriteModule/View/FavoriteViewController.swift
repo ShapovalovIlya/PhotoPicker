@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FavoriteViewController: UITableViewController {
     
@@ -19,15 +20,15 @@ class FavoriteViewController: UITableViewController {
 
 // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return presenter?.getNumberOfRows() ?? 0
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         setupCell(cell)
-        
-        let stackView = createCellContent()
+        let cellIndex = indexPath.row
+        let stackView = createCellContent(withCellIndex: cellIndex)
         
         cell.addSubview(stackView)
         stackView.frame = cell.bounds
@@ -69,11 +70,14 @@ private extension FavoriteViewController {
         cell.layer.cornerRadius = 10
     }
     
-    func createCellContent() -> UIStackView {
-        let image = UIImage(systemName: "person.circle")
-        let imageView = UIImageView(image: image)
+    func createCellContent(withCellIndex index: Int) -> UIStackView {
+        let photoModel = presenter?.getModelForRow(withIndex: index)
+        let placeholder = UIImage(systemName: "person.circle")
+        let imageURL = photoModel?.imageURL
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        imageView.kf.setImage(with: imageURL, placeholder: placeholder)
         
         let authorNameLabel = UILabel()
         authorNameLabel.text = "Name Lastname"

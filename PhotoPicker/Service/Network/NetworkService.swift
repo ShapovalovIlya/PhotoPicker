@@ -68,28 +68,16 @@ final class NetworkService: Networking {
     
     private func createURLRequest(url: URL, method: HTTPMethod = HTTPMethod.GET) -> URLRequest {
         var request = URLRequest(url: url)
-        
-        switch method {
-        case .GET:
-            request.httpMethod = "GET"
-        case .PUT:
-            request.httpMethod = "PUT"
-        case .POST:
-            request.httpMethod = "POST"
-        case .DELETE:
-            request.httpMethod = "DELETE"
-        }
-        
+        request.httpMethod = method.rawValue
         request.setValue("v1", forHTTPHeaderField: "Accept-Version")
-        
         return request
     }
     
 }
 
-fileprivate enum HTTPMethod {
-    case GET
-    case PUT
-    case POST
-    case DELETE
+fileprivate enum HTTPMethod: String {
+    case GET = "GET"
+    case PUT = "PUT"
+    case POST = "POST"
+    case DELETE = "DELETE"
 }

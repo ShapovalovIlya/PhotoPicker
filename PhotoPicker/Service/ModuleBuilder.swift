@@ -17,8 +17,7 @@ protocol ModuleBuilderInterface {
 final class ModuleBuilder: ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController {
         let view = LibraryViewController()
-        let adapter = Adapter()
-        let model = ModelController(adapter: adapter)
+        let model = ModelController()
         let presenter = LibraryPresenter(view: view, router: router, model: model)
         view.presenter = presenter
         view.title = "Photo Library"
@@ -27,14 +26,17 @@ final class ModuleBuilder: ModuleBuilderInterface {
     
     func makeDetailViewController(router: DetailRouter) -> UIViewController {
         let view = DetailViewController()
-        let presenter = DetailPresenter(view: view, router: router)
+        let model = ModelController()
+        let presenter = DetailPresenter(view: view, router: router, model: model)
         view.presenter = presenter
+        view.title = "About Photo"
         return view
     }
     
     func makeFavoriteViewController(router: FavoriteRouter) -> UITableViewController {
         let view = FavoriteViewController()
-        let presenter = FavoritePresenter(view: view, router: router)
+        let model = ModelController()
+        let presenter = FavoritePresenter(view: view, router: router, model: model)
         view.presenter = presenter
         view.title = "Favorite photos"
         return view
