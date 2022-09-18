@@ -104,6 +104,7 @@
 				8672C3A528C2A4C20050B23B /* LibraryModule */,
 				8672C3B428C395990050B23B /* FavoriteModule */,
 				8672C3AF28C2DDE70050B23B /* DetailModule */,
+				8672C3EC28C619E30050B23B /* Entity */,
 				8672C3DF28C613540050B23B /* Service */,
 				8672C3AA28C2B39E0050B23B /* Extension */,
 				8672C39228C29B860050B23B /* Assets.xcassets */,
@@ -203,20 +204,19 @@
 				8672C39F28C29DAC0050B23B /* ModuleBuilder.swift */,
 				8672C3A128C29E1C0050B23B /* Router.swift */,
 				8672C3F328C66CDA0050B23B /* Adapter.swift */,
-				8672C3EC28C619E30050B23B /* Model */,
 				8672C3EE28C6516A0050B23B /* Network */,
 			);
 			path = Service;
 			sourceTree = "<group>";
 		};
-		8672C3EC28C619E30050B23B /* Model */ = {
+		8672C3EC28C619E30050B23B /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				8672C3EF28C657670050B23B /* PhotoData.swift */,
 				8672C3F128C66CC60050B23B /* PhotoModel.swift */,
 				8672C3F528C6929A0050B23B /* ModelController.swift */,
 			);
-			path = Model;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		8672C3EE28C6516A0050B23B /* Network */ = {
@@ -243,7 +243,6 @@
 				23E35F0F11427106ED9F9CC2 /* Pods-PhotoPicker.debug.xcconfig */,
 				E68A6D23FB5D610CCEA17ADC /* Pods-PhotoPicker.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

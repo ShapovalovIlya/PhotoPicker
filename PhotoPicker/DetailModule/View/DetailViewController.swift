@@ -13,14 +13,14 @@ final class DetailViewController: UIViewController {
     var presenter: DetailPresenterProtocol?
     
     //MARK: - Private properties
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .lightGray
         image.contentMode = .scaleAspectFit
         return image
     }()
     
-    private let authorNameLabel: UILabel = {
+    private lazy var authorNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = .systemFont(ofSize: 30)
@@ -28,9 +28,9 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    private var locationStackView = UIStackView()
+    private lazy var locationStackView = UIStackView()
     
-    private let locationMark: UIImageView = {
+    private lazy var locationMark: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "mappin.and.ellipse")
         imageView.image = image
@@ -41,7 +41,7 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private let locationLabel: UILabel = {
+    private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
         label.text = "Location"
@@ -49,9 +49,9 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    private var dateStackView = UIStackView()
+    private lazy var dateStackView = UIStackView()
     
-    private let dateMark: UIImageView = {
+    private lazy var dateMark: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "calendar")
         imageView.image = image
@@ -62,7 +62,7 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private let dateLabel: UILabel = {
+    private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
         label.text = "DD.MM.YEAR"
@@ -70,9 +70,9 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    private var downloadsStackView = UIStackView()
+    private lazy var downloadsStackView = UIStackView()
     
-    private let downloadsMark: UIImageView = {
+    private lazy var downloadsMark: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "square.and.arrow.down")
         imageView.image = image
@@ -83,7 +83,7 @@ final class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private let downloadsLabel: UILabel = {
+    private lazy var downloadsLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
         label.text = "Downloads: 55"
@@ -97,7 +97,13 @@ final class DetailViewController: UIViewController {
         
         setupView()
         setupNavigationBar()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         setConstraints()
+        presenter?.setPhotoModel()
     }
     
     //MARK: - Private methods
@@ -108,6 +114,16 @@ final class DetailViewController: UIViewController {
 
 //MARK: - Library View Delegate
 extension DetailViewController: DetailViewDelegate {
+    
+    func setPhotoModel(model: PhotoModel?) {
+        guard let model = model else { return }
+        imageView.kf.setImage(with: model.imageURL)
+        authorNameLabel.text = model.author
+        locationLabel.text = model.location
+        dateLabel.text = model.createAt
+        let downloadsCount = String(describing: model.downloads)
+        downloadsLabel.text = "Downloads: \(downloadsCount)"
+    }
     
 }
 

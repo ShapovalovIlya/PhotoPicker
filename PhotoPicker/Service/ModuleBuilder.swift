@@ -9,7 +9,7 @@ import UIKit
 
 protocol ModuleBuilderInterface {
     func makeLibraryViewController(router: LibraryRouter) -> UIViewController
-    func makeDetailViewController(router: DetailRouter) -> UIViewController
+    func makeDetailViewController(photoId: String?, router: DetailRouter) -> UIViewController
     func makeFavoriteViewController(router: FavoriteRouter) -> UITableViewController
     func makePopupMessage(ofType type: PopupType, withMessage message: String?) -> UIAlertController
 }
@@ -24,10 +24,10 @@ final class ModuleBuilder: ModuleBuilderInterface {
         return view
     }
     
-    func makeDetailViewController(router: DetailRouter) -> UIViewController {
+    func makeDetailViewController(photoId: String?, router: DetailRouter) -> UIViewController {
         let view = DetailViewController()
         let model = ModelController()
-        let presenter = DetailPresenter(view: view, router: router, model: model)
+        let presenter = DetailPresenter(view: view, router: router, model: model, photoId: photoId)
         view.presenter = presenter
         view.title = "About Photo"
         return view

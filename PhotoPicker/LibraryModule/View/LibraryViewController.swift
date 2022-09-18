@@ -70,8 +70,9 @@ extension LibraryViewController: UICollectionViewDataSource {
 //MARK: - Collection View Delegate
 extension LibraryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Select item at index: \(indexPath.item)")
-        
+        let photoModel = presenter?.getModelForItem(withIndex: indexPath.item)
+        presenter?.pushDetailView(withId: photoModel?.id)
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 
@@ -183,7 +184,7 @@ struct LibraryViewControllerProvider: PreviewProvider {
         ContainerView().edgesIgnoringSafeArea(.all).previewInterfaceOrientation(.portrait)
     }
     
-    struct ContainerView: UIViewControllerRepresentable{
+    struct ContainerView: UIViewControllerRepresentable {
         let viewController = LibraryViewController()
         func makeUIViewController(
             context: UIViewControllerRepresentableContext<LibraryViewControllerProvider.ContainerView>

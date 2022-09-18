@@ -13,7 +13,7 @@ protocol LibraryViewDelegate: AnyObject {
 
 protocol LibraryPresenterProtocol: AnyObject {
     init(view: LibraryViewDelegate, router: LibraryRouter, model: LibraryModelInterface)
-    func pushDetailView(withId id: String)
+    func pushDetailView(withId id: String?)
     func getNumberOfItems() -> Int?
     func getModelForItem(withIndex index: Int) -> PhotoModel?
 }
@@ -40,8 +40,8 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         return model?.getPhotoModel(withIndex: index)
     }
     
-    func pushDetailView(withId id: String) {
-        
+    func pushDetailView(withId id: String?) {
+        router?.showDetailViewController(withId: id)
     }
     
 }
