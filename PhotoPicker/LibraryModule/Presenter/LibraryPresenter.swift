@@ -13,7 +13,7 @@ protocol LibraryViewDelegate: AnyObject {
 
 protocol LibraryPresenterProtocol: AnyObject {
     init(view: LibraryViewDelegate, router: LibraryRouter, model: LibraryModelInterface)
-    func pushDetailView()
+    func pushDetailView(withId id: String)
     func getNumberOfItems() -> Int?
     func getModelForItem(withIndex index: Int) -> PhotoModel?
 }
@@ -29,16 +29,7 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         self.router = router
         self.model = model
         
-        model.getPhotoLibrary { result in
-            switch result {
-            case .success(let message):
-                view.success()
-                print(message)
-            case .failure(let error):
-                router.showPopupMessage(ofType: .error, withMessage: error.localizedDescription)
-            }
-        }
-        
+        getPhotoLibrary()
     }
     
     func getNumberOfItems() -> Int? {
@@ -49,12 +40,25 @@ final class LibraryPresenter: LibraryPresenterProtocol {
         return model?.getPhotoModel(withIndex: index)
     }
     
-    func pushDetailView() {
+    func pushDetailView(withId id: String) {
         
     }
     
-    func getPhotoDetail(withIndex index: Int) {
-        
+}
+
+private extension LibraryPresenter {
+    
+    func getPhotoLibrary() {
+        model?.getPhotoLibrary { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let message):
+                self.view?.success()
+                print(message)
+            case .failure(let error):
+                self.router?.showPopupMessage(ofType: .error, withMessage: error.localizedDescription)
+            }
+        }
     }
     
 }

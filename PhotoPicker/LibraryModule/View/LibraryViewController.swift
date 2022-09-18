@@ -71,7 +71,7 @@ extension LibraryViewController: UICollectionViewDataSource {
 extension LibraryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select item at index: \(indexPath.item)")
-        presenter?.pushDetailView()
+        
     }
 }
 
