@@ -30,6 +30,7 @@
 		8672C3F228C66CC60050B23B /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3F128C66CC60050B23B /* PhotoModel.swift */; };
 		8672C3F428C66CDA0050B23B /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3F328C66CDA0050B23B /* Adapter.swift */; };
 		8672C3F628C6929A0050B23B /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672C3F528C6929A0050B23B /* ModelController.swift */; };
+		868BD9EA28D8D696000E8590 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868BD9E928D8D696000E8590 /* UIColor+.swift */; };
 		A6456562A3C93BAF29F73CC0 /* Pods_PhotoPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E583C38B67E760337A4B1BE /* Pods_PhotoPicker.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		8672C3F128C66CC60050B23B /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		8672C3F328C66CDA0050B23B /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
 		8672C3F528C6929A0050B23B /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
+		868BD9E928D8D696000E8590 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		E68A6D23FB5D610CCEA17ADC /* Pods-PhotoPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoPicker.release.xcconfig"; path = "Target Support Files/Pods-PhotoPicker/Pods-PhotoPicker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				8672C3AB28C2B3BB0050B23B /* UIView+.swift */,
+				868BD9E928D8D696000E8590 /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				8672C3E428C613830050B23B /* NetworkService.swift in Sources */,
 				8672C3EB28C618E20050B23B /* APIKeys.swift in Sources */,
 				8672C3AE28C2D1BA0050B23B /* DetailViewController.swift in Sources */,
+				868BD9EA28D8D696000E8590 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

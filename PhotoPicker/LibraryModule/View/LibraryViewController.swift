@@ -13,20 +13,24 @@ final class LibraryViewController: UIViewController {
     var presenter: LibraryPresenterProtocol?
     
     //MARK: - Private properties
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.sizeToFit()
         searchBar.placeholder = "Search..."
         return searchBar
     }()
     
-    private var collectionView: UICollectionView!
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionLayout())
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
 
     //MARK: - Life Cycle
     override func loadView() {
         super.loadView()
         
-        setupCollectionView()
         setupView()
         setDelegates()
         setupNavigationBar()
@@ -89,23 +93,21 @@ private extension LibraryViewController {
     func setupView() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
-    }
-    
-    //MARK: - Setup collection view
-    func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionLayout())
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.backgroundColor = .clear
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionViewCell")
     }
     
+    //MARK: - Setup collection view cell
     func setupCell(_ cell: UICollectionViewCell, withIndex index: Int) {
         cell.backgroundColor = .black
         cell.layer.cornerRadius = 10
-        let photoModel = presenter?.getModelForItem(withIndex: index)
+        guard let photoModel = presenter?.getModelForItem(withIndex: index) else {
+            print("Fail to unwrap photo model!")
+            return
+        }
         let imageView = UIImageView()
-        let imageURL = photoModel?.imageURL
+        let imageURL = photoModel.imageURL
         let placeHolder = UIImage(systemName: "square.and.arrow.down")
+        imageView.backgroundColor = UIColor(hex: photoModel.backgroundHEX)
         imageView.kf.setImage(with: imageURL, placeholder: placeHolder)
         imageView.contentMode = .scaleAspectFit
         cell.backgroundView = imageView

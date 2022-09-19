@@ -25,6 +25,8 @@ final class DetailViewController: UIViewController {
         label.textColor = .black
         label.font = .systemFont(ofSize: 30)
         label.text = "Name Lastname"
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -45,6 +47,9 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
         label.text = "Location"
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.textColor = .lightGray
         return label
     }()
@@ -116,7 +121,11 @@ final class DetailViewController: UIViewController {
 extension DetailViewController: DetailViewDelegate {
     
     func setPhotoModel(model: PhotoModel?) {
-        guard let model = model else { return }
+        guard let model = model else {
+            print("Fail to unwrap photo model!")
+            return
+        }
+        imageView.backgroundColor = UIColor(hex: model.backgroundHEX)
         imageView.kf.setImage(with: model.imageURL)
         authorNameLabel.text = model.author
         locationLabel.text = model.location
